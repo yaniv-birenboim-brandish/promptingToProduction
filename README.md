@@ -42,6 +42,31 @@ npm install
 Then follow `README.md` on that branch — it covers Supabase setup and the one
 manual Google OAuth step.
 
+### The first exercise: write the spec
+
+There is deliberately **no spec in this repo** — creating it is the first
+thing you do, together with the agent. Start Claude Code in the repo:
+
+```bash
+claude
+```
+
+and say, in your own words, something like:
+
+> Let's write the spec for FamAlbum.
+
+The `build-spec` skill takes over from there. It knows the project (a shared
+family photo album) and the technology (already fixed in
+`instructions/tech-stack.md` — you will never be asked to choose a database),
+and it guides you through short batches of questions about what the app
+should do — **20 questions at most**, usually far fewer. At any point you can
+say **"speed up"** to cut to the essentials, or **"write the spec"** to stop
+the questions and get the file immediately, with gaps filled by marked
+assumptions.
+
+When it's done you'll have `instructions/spec.md` — the file every plan,
+slice, and test in the course is built from.
+
 ---
 
 ## What's on `main`
@@ -50,7 +75,7 @@ manual Google OAuth step.
 |---|---|
 | `CLAUDE.md` | The agent's brief — stack, conventions, guardrails, scope. Inherited by every step branch. The highest-value file in the repo. |
 | `instructions/tech-stack.md` | The fixed technology choices, with the why for each. Not up for discussion — that's the point. |
-| `.claude/skills/build-spec/` | A working skill that interviews you (four questions, one round) and writes the spec. Session 1 opens with it — there is deliberately no spec in the repo. |
+| `.claude/skills/build-spec/` | A working skill that guides you to the spec: short batches of questions (20 max), "speed up" / "write the spec" escape hatches, and technology never asked about. Session 1 opens with it — there is deliberately no spec in the repo. |
 | `instructions/setup-email.md` | Pre-session setup checklist, ready to send. |
 | `instructions/facilitator-guide.md` | Minute-by-minute run sheet for both sessions. |
 | `prompts/session-1/` | A starting prompt per slice, each with a "what to look for in the diff" review checklist. |

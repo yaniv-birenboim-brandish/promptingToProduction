@@ -52,10 +52,13 @@ Points to land:
 ## 0:10–0:30 — Build the spec, then plan mode
 
 There is no spec in the repo — writing it is the first exercise. The
-`build-spec` skill (in `.claude/skills/`) runs the segment: it asks **one
-round of four questions** and writes `instructions/spec.md`. The stack is
+`build-spec` skill (in `.claude/skills/`) runs the segment: it opens with the
+ground rules (20 questions max; say **"speed up"** to cut to essentials or
+**"write the spec"** to get the file immediately), asks short batches about
+features and permissions, and writes `instructions/spec.md`. The stack is
 already fixed in `instructions/tech-stack.md`, so nobody gets asked to choose
-a database.
+a database. Watch the clock: if the room is chatty, call "speed up" yourself
+at the ten-minute mark — hearing the escape hatch used is part of the demo.
 
 On the projector: tell the agent, in ordinary words, "we're building a shared
 family photo album — help me write the spec." The skill should fire (if it
