@@ -73,6 +73,11 @@ assumptions.
 When it's done you'll have `instructions/spec.md` — the file every plan,
 slice, and test in the course is built from.
 
+> **On the `step1` branch**, `instructions/spec.md` (and `instructions/plan.md`
+> once the plan exercise lands) already exist as committed results of these
+> exercises, so catch-up students have them. Doing the exercises yourself?
+> Let the skills overwrite them.
+
 ### The second exercise: plan the build
 
 With the spec written, say something like:
