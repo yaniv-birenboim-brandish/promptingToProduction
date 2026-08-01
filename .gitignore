@@ -16,3 +16,8 @@ coverage
 resources/*.mhtml
 resources/*.html
 resources/vendor/
+
+# The purchased JPhotolio theme bundle. The license covers the buyer's use,
+# not redistribution — committing it would hand the paid product to everyone
+# who clones this repo. It stays local, always.
+resources/jphotolio-html-bundle/

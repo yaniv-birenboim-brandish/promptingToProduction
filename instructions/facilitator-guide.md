@@ -15,7 +15,8 @@ session.
 - [ ] Two or three test images under 5 MB in an obvious folder.
 - [ ] Terminal font large enough to read from the back. Do this now, not at 0:04.
 - [ ] Decide the Google OAuth option (see `instructions/setup-email.md`).
-- [ ] Have `instructions/spec.md` printed or ready to paste in chat.
+- [ ] Read the reference spec in the appendix at the bottom of this guide —
+      it's the answer key for the spec-building segment.
 
 **The one thing that will actually go wrong:** two or three people didn't finish
 setup. Have a plan — pair them with someone who did, and keep going. Do not
@@ -48,11 +49,26 @@ Points to land:
 > **Say this:** "Every rule in here was written after watching it get broken.
 > That's the only way to write a good one. Yours will start empty too."
 
-## 0:10–0:30 — Spec and plan mode
+## 0:10–0:30 — Build the spec, then plan mode
 
-Hand out `instructions/spec.md`. Give them two minutes to read it.
+There is no spec in the repo — writing it is the first exercise. The
+`build-spec` skill (in `.claude/skills/`) runs the segment: it asks **one
+round of four questions** and writes `instructions/spec.md`. The stack is
+already fixed in `instructions/tech-stack.md`, so nobody gets asked to choose
+a database.
 
-Then, on the projector, in plan mode:
+On the projector: tell the agent, in ordinary words, "we're building a shared
+family photo album — help me write the spec." The skill should fire (if it
+doesn't, that's your first triggering lesson, three hours early). Take the
+four answers from the room. Push scope *out* when they volunteer features —
+the skill will too, but hearing you both do it is the lesson.
+
+Compare the result against the reference spec in the appendix. The two things
+it must have gotten right: the **permission rules** stated as database rules,
+and a **two-user definition of done**. Fix those live if weak; shrug off
+cosmetic differences.
+
+Then, in plan mode:
 
 > Read CLAUDE.md and instructions/spec.md. Plan the build for FamAlbum v1 as a
 > sequence of vertical slices. Don't write any code yet.
@@ -198,8 +214,9 @@ This is the part of session 2 people came for. Budget it properly.
 3. **The bypass test.** Sign in as user B. Take the storage path of user A's
    private photo. Try to fetch it directly.
 
-To make it fail first, use the loosened policy at the bottom of
-`supabase/migrations/0001_init.sql`, apply it, run the test, then let the agent
+To make it fail first, use the loosened policy at the bottom of the migration
+file (`supabase/migrations/0001_init.sql` on the step branches;
+`examples/0001_init.sql` on `main`), apply it, run the test, then let the agent
 fix it and run the test again. Ask the room to predict the outcome before each
 run — most people expect the table's RLS to protect the file. It doesn't. Two
 services, two policy systems.
@@ -247,3 +264,66 @@ In priority order, cut:
 **Never cut:** the plan critique (session 1, 0:10), the skill-triggering test
 (1:30), the break-it debrief (1:50), or the bypass test (session 2, 1:30). Those
 four are the course.
+
+If the spec-building segment runs over, don't compress the plan critique to pay
+for it — take the time out of the slices (cut delete from slice 4 first, as
+above).
+
+---
+
+# Appendix — reference spec (the answer key)
+
+This is what a good outcome of the spec-building segment looks like. Students'
+specs will differ in wording — what must match is the permission rules and the
+two-user definition of done. Do not hand this out; the point is that they wrote
+theirs.
+
+## FamAlbum — the spec
+
+A shared family photo album.
+
+- Users log in with **Google**.
+- A logged-in user uploads a photo and marks it **private** (only them) or
+  **shared** (whole family).
+- The gallery shows every photo the current user is allowed to see: their own
+  (private *and* shared) plus everyone else's shared photos.
+- Users can delete their own photos.
+
+**Out of scope for v1:** thumbnails, editing, captions, albums, comments,
+per-person sharing, search. *(Those are the expansion paths — session 2 and
+take-home.)*
+
+### Constraints
+
+- Full-size images only. No resizing, no thumbnails.
+- One image per upload.
+- 5 MB per file, images only (jpeg / png / webp / gif).
+- Two visibility levels: `private`, `shared`. No third state, no per-person
+  sharing.
+- Simple responsive grid. No lightbox, no album nesting, no infinite scroll.
+
+### Permissions
+
+- A user sees their own photos (both visibilities) plus everyone's shared
+  photos — enforced by the database, not by the UI.
+- A user can insert, update, and delete only their own photos.
+- Logged-out visitors see nothing.
+
+### Definition of done
+
+Two people sign in to the same project. Each uploads one private photo and one
+shared photo. Each sees three photos: their own two, and the other person's
+shared one. Neither can see the other's private photo. Each can delete only
+their own. Nothing in the React code makes that true — the database does.
+
+### Data model sketch
+
+```
+photos
+  id            uuid
+  owner_id      uuid   -> auth.users
+  storage_path  text   -> '<owner_id>/<uuid>.<ext>' in the `photos` bucket
+  visibility    'private' | 'shared'
+  caption       text (nullable — column exists, no UI in v1)
+  created_at    timestamptz
+```

@@ -49,7 +49,8 @@ manual Google OAuth step.
 | Path | What it is |
 |---|---|
 | `CLAUDE.md` | The agent's brief — stack, conventions, guardrails, scope. Inherited by every step branch. The highest-value file in the repo. |
-| `instructions/spec.md` | The one-page spec, handed out in session 1. |
+| `instructions/tech-stack.md` | The fixed technology choices, with the why for each. Not up for discussion — that's the point. |
+| `.claude/skills/build-spec/` | A working skill that interviews you (four questions, one round) and writes the spec. Session 1 opens with it — there is deliberately no spec in the repo. |
 | `instructions/setup-email.md` | Pre-session setup checklist, ready to send. |
 | `instructions/facilitator-guide.md` | Minute-by-minute run sheet for both sessions. |
 | `prompts/session-1/` | A starting prompt per slice, each with a "what to look for in the diff" review checklist. |
@@ -57,7 +58,7 @@ manual Google OAuth step.
 | `skills/supabase-data-access/` | A finished skill, to study. |
 | `skills/stub-skill/` | The one completed live in session 1. |
 | `.claude/agents/` | Subagent definitions — `implementer` and `test-writer`. |
-| `resources/` | Design reference material. |
+| `resources/` | Design material. The purchased JPhotolio theme lives here locally (gitignored — see `resources/README.md`); it's the predefined design FamAlbum builds against. |
 | `examples/` | The reference pieces the starter is assembled from — the configured Supabase client, generated types, the migration, and the env template. On `step1` these are wired into their real locations. |
 
 ### Not pre-built, on purpose
@@ -72,8 +73,9 @@ for the implementer-vs-test-writer contrast, not because they're the lesson.
 
 ## The two sessions
 
-**Session 1 — build it.** `CLAUDE.md` walkthrough, spec, plan mode and a class
-critique of the agent's plan, then four vertical slices with a commit each.
+**Session 1 — build it.** `CLAUDE.md` walkthrough, then write the spec *with*
+the agent using the `build-spec` skill, plan mode and a class critique of the
+agent's plan, then four vertical slices with a commit each.
 Then write a project skill live, and finish by breaking the app on purpose with
 a bad prompt to see what the guardrails were doing.
 

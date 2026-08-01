@@ -1,7 +1,7 @@
 # Attendee setup email
 
-*Copy from the line below. Replace `<REPO URL>`, the date/time, and decide the
-Google OAuth question before sending (see the note at the bottom).*
+*Copy from the line below. Replace the date/time and decide the Google OAuth
+question before sending (see the note at the bottom).*
 
 ---
 
@@ -31,15 +31,19 @@ every line. Session 2 takes it to production.
 - [ ] **Netlify account** (free tier) — https://netlify.com — we need this in
       session 2, but sign up now so it's done
 - [ ] **Google Cloud project** for OAuth credentials — instructions are in the
-      repo README, section 6. *(See the note below.)*
+      README on the `step1` branch, section 6. *(See the note below.)*
 - [ ] **Clone the starter repo and confirm it runs:**
 
 ```bash
-git clone <REPO URL> famalbum
-cd famalbum
+git clone https://github.com/yaniv-birenboim-brandish/promptingToProduction.git
+cd promptingToProduction
+git checkout step1
 npm install
 npm run dev
 ```
+
+*(Don't skip the `git checkout step1` — the default branch, `main`, is the
+course kit and has nothing to run. The app starts on `step1`.)*
 
 Open http://localhost:5173. You should see the FamAlbum welcome screen with a
 greyed-out "Sign in with Google" button.

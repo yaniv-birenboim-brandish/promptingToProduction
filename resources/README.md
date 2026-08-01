@@ -1,22 +1,41 @@
 # Resources
 
-Reference material for the course. Nothing in here is application code.
+Reference material for the course. Nothing in here is application code, and
+nothing in here ships with FamAlbum.
 
-| File | What it is |
-|---|---|
-| `design-reference.md` | Design direction for FamAlbum's UI — palette, type scale, layout and interaction patterns, plus a scoped styling prompt for the agent. |
-| `design-reference-source.png` | A render of the source design, for orientation while building. Reference only — not an asset to ship. |
+## The purchased theme bundle (local only)
+
+`jphotolio-html-bundle/` is the **purchased** JPhotolio theme (jegtheme,
+ThemeForest item 3057579) — the full HTML build (`jphotoliohtml/`, with working
+JS), PSDs, docs, and license texts. FamAlbum uses it as the predefined design
+to build against.
+
+It is **gitignored** (see `.gitignore`) and exists only on the instructor's
+machine: the ThemeForest license covers the buyer's use, not redistribution to
+everyone who clones this repo. The demo photographs inside `images/` were
+mirrored from the author's own demo site to replace the grey placeholders the
+bundle ships with; they are under the same restriction. The untouched
+placeholders are kept in `images-placeholder-backup/`.
+
+To browse it with everything working, serve it over HTTP — parts of it load
+via ajax, so `file://` won't fully work:
+
+```bash
+cd resources/jphotolio-html-bundle/jphotoliohtml
+python3 -m http.server 8899
+# open http://localhost:8899/masonry.html
+```
 
 ## Saved web pages
 
-`.mhtml` / `.html` captures are **gitignored** (see `.gitignore`). Drop them in
-this folder locally and they'll stay out of the repo.
+`.mhtml` / `.html` captures are also gitignored. Drop them in this folder
+locally and they'll stay out of the repo. Note that an MHTML snapshot contains
+**no JavaScript** — Chrome strips scripts on save — so none of a template's
+interactions survive in it; it's a static visual reference only.
 
-The reason: a "Save As" of a commercial template preview contains that
-template's complete stylesheet, scripts and images. Studying it and deriving
-design direction is fine — that's what `design-reference.md` is. Committing the
-capture to a repo other people clone is redistributing a paid product, which is
-a different thing.
+## The rule for FamAlbum code
 
-To work from a saved page yourself: save it here, then ask the agent to derive
-tokens and patterns into a markdown reference rather than to copy the CSS.
+Derive, don't paste. Studying the theme and rebuilding its patterns (tokens,
+layout, interactions) in FamAlbum's own Tailwind/React code is what the license
+and the course both intend. Copying the theme's markup, CSS, or images into the
+app — or into anything committed — is redistribution of a paid product.
