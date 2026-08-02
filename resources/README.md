@@ -8,8 +8,9 @@ nothing in here ships with FamAlbum.
 `design-reference.md` is the course's design source: the tokens, layout rules,
 and interaction patterns FamAlbum's UI follows, derived from the purchased
 theme below and described in our own terms — the license-safe, committed form.
-The build plan's styling slice implements it, and it contains the exact
-styling prompt to paste.
+The UI implements it from the first slice — the look is predefined, so
+components are built already styled. The file also contains a ready styling
+prompt for restyling an existing unstyled app.
 
 ## The purchased theme bundle (local only, instructor's machine)
 

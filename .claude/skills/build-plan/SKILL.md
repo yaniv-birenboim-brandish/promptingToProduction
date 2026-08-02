@@ -60,11 +60,12 @@ the decision `(assumed — change if wrong)`.
 - **Each slice reviewable in five minutes.** If it isn't, split it.
 - **Include the unglamorous paths**: error states surfaced to the user,
   the delete path, cleanup on unmount. Plans that skip them ship them broken.
-- **The plan ends with a styling slice.** Feature slices build plain-but-
-  working UI; the final slice applies `resources/design-reference.md` —
-  visual only, no behaviour changes, no new features (the reference includes
-  the exact prompt to use). Don't sprinkle design work through the feature
-  slices; batching it keeps every earlier diff about behaviour.
+- **The design applies from the first UI slice.** The look is predefined in
+  `resources/design-reference.md`, so components are built styled from day
+  one — tokens in the Tailwind config, the reference's card/badge/grid
+  patterns in the components. No separate "styling slice", and no visual
+  decisions to make or ask about: when a slice adds UI, it adds it already
+  matching the reference.
 
 ## The plan file
 

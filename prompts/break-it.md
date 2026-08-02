@@ -1,6 +1,6 @@
 # Break it on purpose
 
-**When:** session 1, final 10 minutes — after six clean slices, when everyone
+**When:** session 1, final 10 minutes — after five clean slices, when everyone
 is feeling good about the agent.
 
 **Why:** every guardrail in `CLAUDE.md` is invisible while it's working. The
@@ -39,7 +39,7 @@ Narrate as it goes. The interesting failures usually include:
   It will invent an answer, and the answer will be reasonable and wrong.
 - **RLS drift.** New tables usually arrive without policies, or with a policy
   copied from `photos` that doesn't fit. This is the dangerous one.
-- **The diff size.** Say the number out loud. Six slices of careful work
+- **The diff size.** Say the number out loud. Five slices of careful work
   produced maybe 400 reviewable lines. This will produce more than that in one
   shot, and no one in the room will read it.
 

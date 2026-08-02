@@ -1,13 +1,14 @@
-# Slice 1 — Stubbed UI on fixture data
+# Slice 1 — Stubbed UI on fixture data, styled from the start
 
-**Goal:** the whole app is visible and clickable before any backend exists:
-gallery grid, upload control with a private/shared choice, delete on "your"
-photos. Everything runs on fixture data in local state; nothing persists — a
-refresh resets it all, and that's correct.
+**Goal:** the whole app is visible, clickable, and **already looks like
+FamAlbum** before any backend exists: gallery grid, upload control with a
+private/shared choice, delete on "your" photos — all styled per
+`resources/design-reference.md`. Everything runs on fixture data in local
+state; nothing persists — a refresh resets it all, and that's correct.
 
-**Time:** ~10 minutes. The fast visible win.
+**Time:** ~15 minutes. The fast visible win.
 
-**Commit message:** `feat: stubbed UI on fixture data`
+**Commit message:** `feat: stubbed UI on fixture data, styled per design reference`
 
 ---
 
@@ -28,9 +29,10 @@ onward never stops for setup.)
 
 ## Prompt
 
-> Read CLAUDE.md and instructions/plan.md first.
+> Read CLAUDE.md, instructions/plan.md, and resources/design-reference.md
+> first.
 >
-> Build slice 1 of the plan: the stubbed UI.
+> Build slice 1 of the plan: the stubbed UI, styled per the design reference.
 >
 > **Requirements**
 >
@@ -44,13 +46,19 @@ onward never stops for setup.)
 >   **private**, and a submit that adds a fixture entry to local state (the
 >   picked file's name is enough — no reading bytes).
 > - Local state only, in `App`. Delete removes from local state.
+> - Style it per the design reference as you build: the palette and fonts
+>   into `tailwind.config.js` (PT Sans Narrow 400/700, Overlock 400 italic
+>   from Google Fonts), white cards on the off-white page, tight gutters,
+>   3px radius, the card shadow, caption strip below the image, and the
+>   private/shared **corner badge** tucked into the image (private = accent,
+>   shared = neutral). Fixed aspect-ratio grid — **no masonry**.
 >
 > **Constraints**
 >
 > - **No `supabase` import anywhere in this slice.** No hooks that talk to
 >   the network. That starts in slice 2.
-> - No router, no new dependencies, no styling beyond the barest Tailwind —
->   the design pass is slice 6.
+> - No router, no new dependencies. One accent colour, used sparingly —
+>   the private badge and the primary action, nothing else.
 >
 > Plan first, then wait for me.
 
@@ -67,6 +75,10 @@ onward never stops for setup.)
 - Is the delete control keyed off `owner_id === fixtureUser.id`, mirroring
   how the real ownership check will read later?
 - Did it sneak in persistence (localStorage) to be "helpful"? Out of scope.
+- **The accent discipline**: the reference is eight greys and one accent —
+  if the red-orange shows up anywhere beyond the private badge and the
+  primary action, push back. And no masonry: the pretty layout has a data
+  dependency (image dimensions) that v1 doesn't have.
 
 ## Teaching beat
 

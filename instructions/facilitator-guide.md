@@ -106,12 +106,15 @@ nobody gets stuck, not that everyone types the same thing.
 
 | | Slice | ~ |
 |---|---|---|
-| 1 | Stubbed UI on fixture data | 10 min |
+| 1 | Stubbed UI on fixtures, styled per the design reference | 15 min |
 | 2 | Google sign-in + session gate | 10 min |
 | 3 | Real gallery — swap fixtures for RLS-backed rows | 12 min |
 | 4 | Upload with rollback ⚠ riskiest | 18 min |
 | 5 | Delete your own | 5 min |
-| 6 | Styling pass (design reference) | 5 min |
+
+(The design is built in from slice 1 — the look is predefined in
+`resources/design-reference.md`, so there are no visual decisions to make,
+and no separate styling slice.)
 
 (The slice order and content come from `instructions/plan.md` — the plan the
 class critiqued at 0:10. If the critique changed the plan, the prompts bend
@@ -132,10 +135,10 @@ Teach these *as they happen*, not as a lecture:
 - **Read the diff, but not evenly.** Name the twelve risky lines in each slice
   (they're in the prompt files) and show yourself skimming the rest.
 
-**Watch the clock.** If you're past 1:05 and slice 4 isn't done, drop the
-styling slice (it's the take-home that loses least); delete (slice 5) goes
-next if you must. Do not sacrifice the last thirty minutes — the skill and
-the break-it demo are what people remember.
+**Watch the clock.** If you're past 1:05 and slice 4 isn't done, cut delete
+(slice 5) — it's the smallest loss and makes good homework. Do not sacrifice
+the last thirty minutes — the skill and the break-it demo are what people
+remember.
 
 ## 1:30–1:50 — Write a skill, live
 
@@ -280,7 +283,7 @@ In priority order, cut:
 four are the course.
 
 If the spec-building segment runs over, don't compress the plan critique to pay
-for it — take the time out of the slices (drop the styling slice first, as
+for it — take the time out of the slices (cut delete, slice 5, first, as
 above).
 
 ---

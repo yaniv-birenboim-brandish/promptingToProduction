@@ -8,8 +8,8 @@ repo). **This file is the shareable form**: everything FamAlbum takes from
 that design, described in our own terms.
 
 **What this file is:** design *direction* — tokens, layout rules, and
-interaction patterns, for building FamAlbum's UI. It is what the build plan's
-styling slice implements.
+interaction patterns, for building FamAlbum's UI. The app implements it from
+the first slice: components are built already styled.
 **What it is not:** the template's markup, CSS, or images. Nothing here
 should be implemented by pasting the theme's code — derive, don't paste.
 
@@ -162,6 +162,11 @@ lg 1024 / xl 1280` rather than reproducing these.
 ---
 
 ## Tailwind tokens
+
+The base page for all of this is the purchased bundle's
+`jphotoliohtml/masonry.html`; every value below is verified against its
+actual stylesheet (`jphotoliohtml/css/style.css`). If a token here and the
+bundle ever disagree, the bundle wins — re-derive, don't guess.
 
 Drop into `tailwind.config.js` under `theme.extend`, or express as CSS variables
 in `src/index.css` alongside the existing shadcn ones:
