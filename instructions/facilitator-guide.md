@@ -106,10 +106,15 @@ nobody gets stuck, not that everyone types the same thing.
 
 | | Slice | ~ |
 |---|---|---|
-| 1 | Schema + typed client confirmed | 10 min |
-| 2 | Google OAuth, session, protected shell | 15 min |
-| 3 | Upload: file → Storage → row | 20 min |
-| 4 | Gallery + delete your own | 15 min |
+| 1 | Google sign-in + session gate | 10 min |
+| 2 | Gallery through RLS (honest empty state) | 15 min |
+| 3 | Upload with rollback ⚠ riskiest | 20 min |
+| 4 | Delete your own | 7 min |
+| 5 | Styling pass (design reference) | 8 min |
+
+(The slice order and content come from `instructions/plan.md` — the plan the
+class critiqued at 0:10. If the critique changed the plan, the prompts bend
+to the plan, not the other way around.)
 
 Teach these *as they happen*, not as a lecture:
 
@@ -126,8 +131,9 @@ Teach these *as they happen*, not as a lecture:
 - **Read the diff, but not evenly.** Name the twelve risky lines in each slice
   (they're in the prompt files) and show yourself skimming the rest.
 
-**Watch the clock.** If you're past 1:00 and slice 3 isn't done, cut delete from
-slice 4 and move on. Do not sacrifice the last thirty minutes — the skill and
+**Watch the clock.** If you're past 1:05 and slice 3 isn't done, drop the
+styling slice (it's the take-home that loses least); delete (slice 4) goes
+next if you must. Do not sacrifice the last thirty minutes — the skill and
 the break-it demo are what people remember.
 
 ## 1:30–1:50 — Write a skill, live
@@ -273,7 +279,7 @@ In priority order, cut:
 four are the course.
 
 If the spec-building segment runs over, don't compress the plan critique to pay
-for it — take the time out of the slices (cut delete from slice 4 first, as
+for it — take the time out of the slices (drop the styling slice first, as
 above).
 
 ---
