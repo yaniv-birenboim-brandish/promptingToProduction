@@ -105,7 +105,7 @@ Supabase setup, and the one manual Google OAuth step.
 | `skills/supabase-data-access/` | A finished skill, to study. |
 | `skills/stub-skill/` | The one completed live in session 1. |
 | `.claude/agents/` | Subagent definitions — `implementer` and `test-writer`. |
-| `resources/` | Design material. The purchased JPhotolio theme lives here locally (gitignored — see `resources/README.md`); it's the predefined design FamAlbum builds against. |
+| `resources/` | The design. `design-reference.md` is the predefined design FamAlbum builds against (tokens, patterns, and the styling prompt) — derived from a purchased theme that lives only on the instructor's machine (gitignored; see `resources/README.md`). |
 | `examples/` | The reference pieces the starter is assembled from — the configured Supabase client, generated types, the migration, and the env template. On `step2` these are wired into their real locations. |
 
 ### Not pre-built, on purpose

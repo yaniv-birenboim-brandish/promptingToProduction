@@ -3,12 +3,20 @@
 Reference material for the course. Nothing in here is application code, and
 nothing in here ships with FamAlbum.
 
-## The purchased theme bundle (local only)
+## The design reference (what students use)
+
+`design-reference.md` is the course's design source: the tokens, layout rules,
+and interaction patterns FamAlbum's UI follows, derived from the purchased
+theme below and described in our own terms — the license-safe, committed form.
+The build plan's styling slice implements it, and it contains the exact
+styling prompt to paste.
+
+## The purchased theme bundle (local only, instructor's machine)
 
 `jphotolio-html-bundle/` is the **purchased** JPhotolio theme (jegtheme,
 ThemeForest item 3057579) — the full HTML build (`jphotoliohtml/`, with working
-JS), PSDs, docs, and license texts. FamAlbum uses it as the predefined design
-to build against.
+JS), PSDs, docs, and license texts. It is the *source* the design reference
+above was derived from; students work from the reference, not the bundle.
 
 It is **gitignored** (see `.gitignore`) and exists only on the instructor's
 machine: the ThemeForest license covers the buyer's use, not redistribution to
