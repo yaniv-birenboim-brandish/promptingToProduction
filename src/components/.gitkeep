@@ -1,0 +1,5 @@
+# You build the components. Suggested shape (see CLAUDE.md):
+#
+#   src/components/          presentational components
+#   src/components/ui/       shadcn/ui primitives (npx shadcn@latest add ...)
+#   src/hooks/               data hooks — the only place that touches `supabase`
