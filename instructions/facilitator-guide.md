@@ -304,6 +304,8 @@ A shared family photo album.
   **shared** (whole family).
 - The gallery shows every photo the current user is allowed to see: their own
   (private *and* shared) plus everyone else's shared photos.
+- Clicking a photo opens it large — a single-photo view with prev/next and
+  the curtain transition from the design reference.
 - Users can delete their own photos.
 
 **Out of scope for v1:** thumbnails, editing, captions, albums, comments,
@@ -317,7 +319,8 @@ take-home.)*
 - 5 MB per file, images only (jpeg / png / webp / gif).
 - Two visibility levels: `private`, `shared`. No third state, no per-person
   sharing.
-- Simple responsive grid. No lightbox, no album nesting, no infinite scroll.
+- Simple responsive grid; a photo opens large in a single-photo view. No
+  album nesting, no infinite scroll.
 
 ### Permissions
 

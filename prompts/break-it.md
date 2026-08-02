@@ -32,7 +32,7 @@ Narrate as it goes. The interesting failures usually include:
   explicitly forbids and which would break every attendee who already applied
   it.
 - **New dependencies.** A state manager, a router, an image library, maybe a
-  lightbox. None of them asked for, all of them plausible.
+  carousel plugin. None of them asked for, all of them plausible.
 - **The refactor.** "Refactor anything that needs it" is a blank cheque. Watch
   it rewrite the four hooks you just reviewed and committed.
 - **Silent scope invention.** Comments? On which model? With what permissions?

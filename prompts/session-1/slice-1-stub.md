@@ -45,6 +45,10 @@ onward never stops for setup.)
 > - An `UploadForm`: file input, private/shared choice defaulting to
 >   **private**, and a submit that adds a fixture entry to local state (the
 >   picked file's name is enough — no reading bytes).
+> - Clicking a photo opens a **single-photo view** — large image, owner and
+>   date, prev/next, and a back control — behind the reference's **curtain
+>   transition**: a page-covering panel slides down, the view swaps, the
+>   panel lifts. No router — conditional rendering.
 > - Local state only, in `App`. Delete removes from local state.
 > - Style it per the design reference as you build: the palette and fonts
 >   into `tailwind.config.js` (PT Sans Narrow 400/700, Overlock 400 italic
@@ -92,5 +96,6 @@ the start. Cheap discipline now, free refactor later.
 
 ## Done when
 
-The grid renders, the upload form adds a card, delete removes one — and a
-refresh resets everything to the fixtures.
+The grid renders, the upload form adds a card, delete removes one, clicking
+a photo opens it large behind the curtain and back returns to the grid — and
+a refresh resets everything to the fixtures.

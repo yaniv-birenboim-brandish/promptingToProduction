@@ -37,7 +37,9 @@ shared ones, which right now is an honest, friendly empty state — and
 >
 > **Constraints**
 >
-> - No thumbnails, no lightbox, no infinite scroll, no captions, no albums.
+> - The single-photo view from slice 1 keeps working — it reads from the
+>   same swapped data source, unchanged.
+> - No thumbnails, no infinite scroll, no captions, no albums.
 > - No real upload or delete yet — those are slices 4 and 5.
 >
 > Plan first.
