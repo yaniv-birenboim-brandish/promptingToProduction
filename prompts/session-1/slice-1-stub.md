@@ -55,7 +55,13 @@ onward never stops for setup.)
 >   from Google Fonts), white cards on the off-white page, tight gutters,
 >   3px radius, the card shadow, caption strip below the image, and the
 >   private/shared **corner badge** tucked into the image (private = accent,
->   shared = neutral). Fixed aspect-ratio grid — **no masonry**.
+>   shared = neutral). **Masonry** via CSS multi-column (`columns-*` +
+>   `break-inside-avoid`); give the fixtures mixed portrait/landscape sizes
+>   so the columns interlock. Header per the reference: nav cells with
+>   label + italic sublabel, the logo splitting the middle.
+> - A centered **filter bar** (all / my photos / family's) styled as the
+>   reference's pills — active pill solid chrome-black. It filters the
+>   *display* only; put that in a comment, because it will come up.
 >
 > **Constraints**
 >
@@ -81,8 +87,9 @@ onward never stops for setup.)
 - Did it sneak in persistence (localStorage) to be "helpful"? Out of scope.
 - **The accent discipline**: the reference is eight greys and one accent —
   if the red-orange shows up anywhere beyond the private badge and the
-  primary action, push back. And no masonry: the pretty layout has a data
-  dependency (image dimensions) that v1 doesn't have.
+  primary action, push back.
+- **Is the filter display-only, and does a comment say so?** This line is
+  the seed of the homework and of session 2's whole security argument.
 
 ## Teaching beat
 

@@ -141,14 +141,16 @@ lg 1024 / xl 1280` rather than reproducing these.
 
 **Adapt:**
 
-- Masonry needs real image dimensions to pack well, and v1 has no thumbnails —
-  full-size images in a masonry grid will jump as they load. Either store
-  width/height at upload (a schema change — session 2), or use a fixed
-  aspect-ratio grid for v1 and go masonry once thumbnails exist. **The fixed
-  grid is the right v1 call**, and the reason is a nice thing to say out loud:
-  the pretty layout has a data dependency.
-- Their filter bar maps onto the homework toggle ("my photos only") and later
-  onto albums/tags. Same component, different source.
+- Masonry: implemented with **CSS multi-column** (`columns-*` on the grid,
+  `break-inside-avoid` on the cards) — no plugin, no stored dimensions; the
+  browser packs cards as images load. (A measured JS masonry like the
+  theme's would need width/height columns in the schema — a session-2
+  change if the column-order quirk ever bothers anyone: CSS columns flow
+  top-to-bottom per column, not left-to-right.)
+- Their filter bar maps onto the gallery's display filter (all / my photos
+  / family's) — shipped styled in slice 1, filtering **display only**. The
+  homework wires it into the database query and asks why the JS version
+  was never a security control.
 
 **Leave:**
 

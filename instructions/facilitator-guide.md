@@ -168,8 +168,10 @@ file. Fresh context, paste the bad prompt, narrate, let it run ~3 minutes, then
 End by adding one genuinely missing guardrail to `CLAUDE.md` and committing it.
 Leaving on "we improved the toolkit" beats leaving on "we broke the app".
 
-**Homework:** add a "my photos only" filter toggle, solo. Note where the agent
-fought you — we open session 2 with that.
+**Homework:** the filter bar filters in JavaScript, client-side. Wire it into
+the database query instead, solo — and write one paragraph: was the JS
+version a security hole? (It wasn't. Knowing exactly why is the point.)
+Note where the agent fought you — we open session 2 with that.
 
 ---
 
@@ -319,8 +321,9 @@ take-home.)*
 - 5 MB per file, images only (jpeg / png / webp / gif).
 - Two visibility levels: `private`, `shared`. No third state, no per-person
   sharing.
-- Simple responsive grid; a photo opens large in a single-photo view. No
-  album nesting, no infinite scroll.
+- Masonry grid (CSS columns) with a display-only filter bar (all / mine /
+  family's); a photo opens large in a single-photo view. No album nesting,
+  no infinite scroll.
 
 ### Permissions
 
