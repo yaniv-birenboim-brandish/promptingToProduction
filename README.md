@@ -1,162 +1,226 @@
-# Prompting to Production — agentic coding course
+# FamAlbum — `starter`, the seeded environment
 
-Two sessions, two hours each. Build and ship a real full-stack app working
-*with* an AI agent — planning, delegating, reviewing — rather than chatting with
-one.
+> **Branch map.** `main` is the course kit — instructions, prompts, skills,
+> agents, resources. `step1` added the thinking: the spec and the build plan,
+> still no code. This branch, `starter`, is the seeded environment you build
+> from — it is not a course phase. The phases continue as `step2` (the
+> template adapted into stubs), `step3` (auth), and so on — each branch the
+> completed state after that phase, so if you fall behind, check out the
+> next one and you're caught up.
 
-The project is **FamAlbum**: a shared family photo album where you sign in with
-Google, upload photos, and mark each one private or shared. The gallery shows
-exactly what you're allowed to see, and the database is what makes that true.
+A shared family photo album. Sign in with Google, upload photos, mark each one
+**private** (just you) or **shared** (the whole family). The gallery shows only
+what you're allowed to see.
+
+This is the starter for the **Agentic Coding** course. The environment is seeded
+so you don't lose class time to bucket policies and CORS. The *features* are
+not — you build those with the agent.
+
+> **What's already here:** the toolchain, a configured Supabase client, typed
+> schema definitions, and a migration that sets up the table, RLS, the Storage
+> bucket and its policies.
+>
+> **What's missing (this is the course):** login, upload, and the gallery.
+> `npm run dev` boots to a logged-out screen with a dead sign-in button. That's
+> correct.
 
 ---
 
-## How this repo is organised
+## 1. Prerequisites
 
-**`main` is the course kit, not the app.** It holds the instructions, the agent
-toolkit, and reference material — everything that stays useful after the app is
-built. There is no `package.json` here and nothing to run.
+- Node.js LTS (`node -v` should print v20 or newer)
+- A [Supabase](https://supabase.com) account (free tier)
+- A Google Cloud project for OAuth credentials — **or** the shared credentials
+  your instructor hands out
+- Claude Code, installed and authenticated
+- Git, and a GitHub account you can push to
 
-**The work lives on the `step*` branches**, each one the completed state after
-that course phase. They chain, so if you fall behind or want to rejoin the
-group, check out the next step branch and you're caught up. One branch —
-`starter` — is not a phase: it's the seeded environment you begin coding
-from.
+---
 
-```
-main             course kit — instructions, prompts, skills, agents, resources, examples
- └─ step1        phase 1, the thinking: spec + architecture plan. Still no code.
-     └─ starter  the seeded environment: toolchain, typed client, migration, empty shell
-         └─ step2    phase 2: the purchased template adapted into the stubbed UI
-             └─ step3    phase 3: Google sign-in gating the stub
-                 └─ …    then the real gallery, upload with rollback, delete
-```
-
-**Step numbers = course phases.** Phase 1 produces markdown, not code; coding
-starts from `starter` and every phase from stubs onward gets its own step
-branch. Every branch inherits everything on `main`, so `CLAUDE.md`, the
-prompts and the skills travel with you.
-
-### Getting started
+## 2. Install
 
 ```bash
 git clone https://github.com/yaniv-birenboim-brandish/promptingToProduction.git
 cd promptingToProduction
-git checkout step1
+git checkout starter
+npm install
 ```
 
-No `npm install` yet — there's nothing to install until you reach the
-`starter` branch. Step 1 is the two exercises below; both produce markdown,
-not code.
+> **Already did step 1?** Your `instructions/spec.md` and
+> `instructions/plan.md` carry over from `step1` — this branch ships the same
+> two files as committed reference, produced by the `build-spec` and
+> `build-plan` skills. If you skipped step 1, read them before slice 1: the
+> plan is what you're about to build.
 
-### The first exercise: write the spec
+---
 
-There is deliberately **no spec in this repo** — creating it is the first
-thing you do, together with the agent. Start Claude Code in the repo:
+## 3. Create your Supabase project
+
+1. [supabase.com/dashboard](https://supabase.com/dashboard) → **New project**.
+   Any name. Save the database password somewhere; you won't need it today but
+   you'll be annoyed later if you lose it.
+2. Wait for it to finish provisioning (~2 minutes).
+
+---
+
+## 4. Apply the migration
+
+1. In the dashboard: **SQL Editor** → **New query**.
+2. Paste the entire contents of `supabase/migrations/0001_init.sql`.
+3. **Run**.
+
+This creates the `photos` table, its RLS policies, the `photos` Storage bucket,
+and the Storage policies. Verify it worked:
+
+- **Table Editor** → you should see `photos` with an "RLS enabled" badge.
+- **Storage** → you should see a `photos` bucket, marked private.
+
+> If you use the Supabase CLI instead, `supabase link` then `supabase db push`
+> does the same thing.
+
+---
+
+## 5. Set your environment variables
 
 ```bash
-claude
+cp .env.example .env
 ```
 
-and say, in your own words, something like:
+In the dashboard: **Project Settings → API**. Copy:
 
-> Let's write the spec for FamAlbum.
+- **Project URL** → `VITE_SUPABASE_URL`
+- **anon / public key** → `VITE_SUPABASE_ANON_KEY`
 
-The `build-spec` skill takes over from there. It knows the project (a shared
-family photo album) and the technology (already fixed in
-`instructions/tech-stack.md` — you will never be asked to choose a database),
-and it guides you through short batches of questions about what the app
-should do — **20 questions at most**, usually far fewer. At any point you can
-say **"speed up"** to cut to the essentials, or **"write the spec"** to stop
-the questions and get the file immediately, with gaps filled by marked
-assumptions.
-
-When it's done you'll have `instructions/spec.md` — the file every plan,
-slice, and test in the course is built from.
-
-> **On the `step1` branch**, `instructions/spec.md` (and `instructions/plan.md`
-> once the plan exercise lands) already exist as committed results of these
-> exercises, so catch-up students have them. Doing the exercises yourself?
-> Let the skills overwrite them.
-
-### The second exercise: plan the build
-
-With the spec written, say something like:
-
-> Let's plan the build.
-
-The `build-plan` skill acts as the project architect: it reads the spec, the
-fixed tech stack, and `CLAUDE.md`, then proposes a development plan as
-**vertical slices** — backend and frontend per slice, each ending with
-something you can see working. **Critique the draft before accepting it** —
-that's the exercise, and the most valuable minutes of session 1. Say
-**"write the plan"** at any point to save it to `instructions/plan.md`.
-
-### Then: the starter, and phase 2
-
-With the spec and plan in hand, `git checkout starter` brings in the runnable
-app skeleton. Follow the `README.md` on that branch — it covers `npm install`,
-Supabase setup, and the one manual Google OAuth step. From there you build
-phase 2 (the stubs) with the agent, using `prompts/session-1/slice-1-stub.md`;
-its completed state is the `step2` branch.
+The anon key is *supposed* to be in your browser bundle. It isn't a secret —
+RLS is what protects your data. (More on this in session 2.) The
+**`service_role`** key is a real secret. Don't put it in this project at all.
 
 ---
 
-## What's on `main`
+## 6. The one manual step: Google OAuth
 
-| Path | What it is |
-|---|---|
-| `CLAUDE.md` | The agent's brief — stack, conventions, guardrails, scope. Inherited by every step branch. The highest-value file in the repo. |
-| `instructions/tech-stack.md` | The fixed technology choices, with the why for each. Not up for discussion — that's the point. |
-| `.claude/skills/build-spec/` | A working skill that guides you to the spec: short batches of questions (20 max), "speed up" / "write the spec" escape hatches, and technology never asked about. Session 1 opens with it — there is deliberately no spec in the repo. |
-| `.claude/skills/build-plan/` | The architect skill: turns the spec into a critique-ready development plan (`instructions/plan.md`) — vertical slices with backend, frontend, risks, and a done-check per slice. |
-| `instructions/setup-email.md` | Pre-session setup checklist, ready to send. |
-| `instructions/facilitator-guide.md` | Minute-by-minute run sheet for both sessions. |
-| `prompts/session-1/` | A starting prompt per slice, each with a "what to look for in the diff" review checklist. |
-| `prompts/break-it.md` | The deliberately mis-scoped prompt, plus the debrief. |
-| `skills/supabase-data-access/` | A finished skill, to study. |
-| `skills/stub-skill/` | The one completed live in session 1. |
-| `.claude/agents/` | Subagent definitions — `implementer` and `test-writer`. |
-| `resources/` | The design. `react-template/` is the "purchased template" — the design as a runnable React app that slice 1 adapts into FamAlbum; `design-reference.md` documents its tokens and patterns. The original HTML theme lives only on the instructor's machine (gitignored; see `resources/README.md`). |
-| `examples/` | The reference pieces the starter is assembled from — the configured Supabase client, generated types, the migration, and the env template. On the `starter` branch (and everything after it) these are wired into their real locations. |
+This is the only piece that can't be seeded, because the credentials are per
+environment. **If your instructor gave you shared credentials, skip to 6c.**
 
-### Not pre-built, on purpose
+### 6a. Create the credentials in Google Cloud
 
-Slash commands (`/add-table`, `/scaffold-component`), hooks (format-on-write,
-block-commit-on-failing-tests), and the PR-review agent are **built live in
-session 2**. Shipping them finished would remove the segment. The two subagents
-in `.claude/agents/` are here because session 2 uses them as a starting point
-for the implementer-vs-test-writer contrast, not because they're the lesson.
+1. [console.cloud.google.com](https://console.cloud.google.com) → create or pick
+   a project.
+2. **APIs & Services → OAuth consent screen**. Choose **External**, fill in an
+   app name and your email, save. Add yourself under **Test users**.
+3. **APIs & Services → Credentials → Create credentials → OAuth client ID**.
+   - Application type: **Web application**
+   - **Authorised redirect URI**: your Supabase callback URL, which is
+     `https://<your-project-ref>.supabase.co/auth/v1/callback`
+     (Supabase shows you this exact string in step 6b — copy it from there.)
+4. Copy the **Client ID** and **Client secret**.
 
----
+### 6b. Tell Supabase about them
 
-## The two sessions
+Supabase dashboard → **Authentication → Sign In / Providers → Google**:
 
-**Session 1 — build it.** `CLAUDE.md` walkthrough, then write the spec *with*
-the agent using the `build-spec` skill, plan mode and a class critique of the
-agent's plan, then five vertical slices with a commit each (the purchased
-React template adapted into the stubbed UI, auth, real gallery, upload,
-delete).
-Then write a project skill live, and finish by breaking the app on purpose with
-a bad prompt to see what the guardrails were doing.
+- Enable it
+- Paste the Client ID and Client secret
+- Copy the **Callback URL** shown here back into Google if you haven't already
+- Save
 
-**Session 2 — ship it.** Slash commands and hooks, subagents and tests, MCP
-against the real Supabase schema, then hardening: RLS and Storage policies, a
-serverless thumbnail function, and a live test of whether one user can load
-another's private photo. Deploy to Netlify, agent-driven PR review in CI, and a
-written team policy for where agents may act.
+### 6c. Set your redirect URLs
 
-Full timings in `instructions/facilitator-guide.md`.
+Supabase dashboard → **Authentication → URL Configuration**:
+
+- **Site URL**: `http://localhost:5173`
+- **Redirect URLs**: add `http://localhost:5173/**`
+
+(Session 2 adds your Netlify URL here too.)
 
 ---
 
-## For instructors
+## 7. Run it
 
-Read `instructions/facilitator-guide.md` first — it has the run sheet, the
-things worth saying out loud, the known failure modes, and what to cut if you're
-running long.
+```bash
+npm run dev
+```
 
-Two decisions to make before you send the setup email: how attendees get Google
-OAuth credentials (three options, discussed at the bottom of
-`instructions/setup-email.md`), and whether the Storage policies ship tight or
-deliberately loose for the session-2 bypass demo (the migration in `examples/`
-ships tight, with a commented loosened variant at the bottom for the demo).
+Open http://localhost:5173. You should see the FamAlbum logged-out screen with a
+greyed-out "Sign in with Google" button and no error banner.
+
+**That's a successful setup.** The button doesn't work yet — you're going to
+make it work.
+
+---
+
+## Project layout
+
+The app:
+
+```
+.env.example               every variable, named and commented
+index.html
+src/
+  App.tsx                  the logged-out shell — you'll replace this
+  main.tsx
+  index.css                Tailwind + the shadcn theme variables
+  lib/supabase.ts          the one configured client. All access goes through it.
+  lib/database.types.ts    generated types for the schema
+  lib/utils.ts             the `cn` helper
+  components/              you build these
+  components/ui/           shadcn/ui primitives
+supabase/migrations/
+  0001_init.sql            table + RLS + bucket + Storage policies
+```
+
+Inherited from `main`, and travelling with you onto every later step:
+
+```
+CLAUDE.md                  the agent's brief: stack, conventions, guardrails
+prompts/session-1/         a starting prompt per slice, if you want one
+prompts/break-it.md        the deliberately bad prompt (session 1, last segment)
+skills/                    a finished skill to study, and the stub you complete
+.claude/agents/            implementer and test-writer subagents
+instructions/              the spec, tech stack, setup email, facilitator run sheet
+resources/                 design material (see resources/README.md)
+```
+
+The three files under `src/lib/` and the migration started life in `examples/`
+on `main` — `starter` is where they're wired into their real locations.
+`git diff step1..starter` is a short, readable summary of what "seeding the
+environment" actually meant.
+
+---
+
+## What you build (session 1)
+
+The five slices of `instructions/plan.md`, one commit each:
+
+1. **Stubs** — the purchased template (`resources/react-template/`) adapted
+   into FamAlbum's UI on fixtures *(phase 2 → the `step2` branch)*.
+2. **Auth** — Google sign-in gating the stub *(step3)*.
+3. **Real gallery** — fixtures swapped for RLS-backed rows *(step4)*.
+4. **Upload with rollback** — the riskiest slice *(step5)*.
+5. **Delete your own** — the spec's two-user test passes *(step6)*.
+
+---
+
+## Troubleshooting
+
+**Blank page, console says "Missing VITE_SUPABASE_URL"** — you didn't restart
+the dev server after creating `.env`. Vite only reads it at startup.
+
+**`redirect_uri_mismatch` from Google** — the URI in Google Cloud must match the
+Supabase callback URL character for character, including `https://` and no
+trailing slash.
+
+**Login works but you land back logged out** — check **Authentication → URL
+Configuration**. Site URL must be `http://localhost:5173`.
+
+**Queries return an empty array and no error** — that's RLS doing its job. An
+empty result is what a denied read looks like; you don't get a 403. Check that
+you're actually authenticated (`supabase.auth.getSession()`), then check the
+policy.
+
+**Upload fails with "new row violates row-level security policy"** — your
+storage path isn't `<your-user-id>/<filename>`. The Storage policies and the
+table's check constraint both require that prefix.
+
+**"Bucket not found"** — the migration didn't run, or it ran before you were
+authenticated as the project owner. Re-run section 4.
