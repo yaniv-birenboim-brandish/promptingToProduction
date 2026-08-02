@@ -1,4 +1,4 @@
-# Slice 3 — Upload with rollback ⚠ the riskiest slice
+# Slice 4 — Upload with rollback ⚠ the riskiest slice
 
 **Goal:** pick an image, choose private or shared, upload it, and watch it
 appear in the gallery. The bytes land in Storage under your own folder; a row
@@ -15,7 +15,7 @@ lands in `photos` pointing at them. A bad file fails loudly.
 > Read CLAUDE.md and instructions/plan.md first, especially the architecture
 > and security sections of CLAUDE.md.
 >
-> Build slice 3 of the plan: the upload flow.
+> Build slice 4 of the plan: the upload flow.
 >
 > **Requirements**
 >
@@ -29,9 +29,10 @@ lands in `photos` pointing at them. A bad file fails loudly.
 >   path.
 > - Validate before uploading, with Zod: image MIME types only
 >   (jpeg/png/webp/gif), 5 MB max. Surface a readable message when it fails.
-> - An `UploadForm` component: file input, a private/shared control
->   defaulting to **private**, a submit button, visible progress and error
->   states. It calls the hook — it does not import `supabase`.
+> - Wire the existing `UploadForm` from slice 1 to the hook: file input, a
+>   private/shared control defaulting to **private**, a submit button,
+>   visible progress and error states. It calls the hook — it does not
+>   import `supabase`.
 > - After a successful upload the gallery refreshes without a page reload.
 >
 > **Constraints**

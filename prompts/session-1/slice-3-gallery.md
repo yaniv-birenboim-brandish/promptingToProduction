@@ -1,8 +1,8 @@
-# Slice 2 — Gallery of what you're allowed to see
+# Slice 3 — Real gallery: swap fixtures for the database
 
-**Goal:** a signed-in user sees a responsive grid of their own photos plus
-everyone's shared ones — which right now is an honest, friendly empty state.
-The grid exists so every later slice has a place to show its result.
+**Goal:** the grid shows actual database rows — your photos plus everyone's
+shared ones, which right now is an honest, friendly empty state — and
+`fixtures.ts` is deleted. Same components, new data source.
 
 **Time:** ~15 minutes.
 
@@ -14,7 +14,7 @@ The grid exists so every later slice has a place to show its result.
 
 > Read CLAUDE.md and instructions/plan.md first.
 >
-> Build slice 2 of the plan: the gallery.
+> Build slice 3 of the plan: the real gallery.
 >
 > **Requirements**
 >
@@ -26,16 +26,19 @@ The grid exists so every later slice has a place to show its result.
 > - Storage objects are private, so each image renders via a signed URL —
 >   `createSignedUrls` (batched, not one call per photo). Handle the case
 >   where a URL fails to sign.
-> - A `PhotoGrid` + `PhotoCard`: responsive grid, full-size images, a plain
->   private/shared badge (styling comes in slice 5), and loading, error, and
->   empty states all visible on screen.
-> - Components are presentational — they call the hook, they don't import
+> - Swap the gallery's data source from fixtures to the hook. The existing
+>   `Gallery`/`PhotoCard` components should barely change — that was the
+>   point of shaping fixtures like `PhotoRow`. **Delete `src/lib/fixtures.ts`.**
+> - Loading, error, and empty states all visible on screen. The stub delete
+>   and upload controls can go inert or hide for now — they come back real in
+>   slices 4 and 5.
+> - Components stay presentational — they call the hook, they don't import
 >   `supabase`.
 >
 > **Constraints**
 >
 > - No thumbnails, no lightbox, no infinite scroll, no captions, no albums.
-> - No upload or delete yet — those are slices 3 and 4.
+> - No real upload or delete yet — those are slices 4 and 5.
 >
 > Plan first.
 
@@ -53,6 +56,9 @@ The grid exists so every later slice has a place to show its result.
   photos and is still worth naming as a smell.
 - Does the empty state render, or does an empty array look like a bug?
 - Did `PhotoCard` import `supabase`? That's the hooks rule failing visibly.
+- **Is `fixtures.ts` actually deleted**, and did the components survive the
+  swap mostly untouched? A big component diff here means the fixture shape
+  lied in slice 1.
 
 ## Teaching beat
 

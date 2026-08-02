@@ -1,4 +1,4 @@
-# Slice 4 — Delete your own photos
+# Slice 5 — Delete your own photos
 
 **Goal:** a delete control on your own photos only. The photo disappears from
 the grid, the row from the table, and the bytes from Storage. This slice
@@ -14,7 +14,7 @@ closes the spec — the two-user test passes end to end.
 
 > Read CLAUDE.md and instructions/plan.md first.
 >
-> Build slice 4 of the plan: delete your own photos.
+> Build slice 5 of the plan: delete your own photos.
 >
 > **Requirements**
 >

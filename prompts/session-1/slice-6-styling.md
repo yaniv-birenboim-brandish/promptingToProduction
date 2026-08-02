@@ -1,4 +1,4 @@
-# Slice 5 — Styling pass (the design reference)
+# Slice 6 — Styling pass (the design reference)
 
 **Goal:** the app matches `resources/design-reference.md`. Behaviour is
 byte-for-byte the same — this diff touches classes, tokens, and markup
@@ -51,4 +51,4 @@ nothing else. A perfect slice to let someone who's been quiet drive.
 ## Done when
 
 It looks like the reference, `npm run typecheck` passes, and a click-through
-of all four earlier slices behaves exactly as before.
+of all five earlier slices behaves exactly as before.

@@ -122,8 +122,8 @@ for the implementer-vs-test-writer contrast, not because they're the lesson.
 
 **Session 1 — build it.** `CLAUDE.md` walkthrough, then write the spec *with*
 the agent using the `build-spec` skill, plan mode and a class critique of the
-agent's plan, then five vertical slices with a commit each (auth, gallery,
-upload, delete, styling).
+agent's plan, then six vertical slices with a commit each (stubbed UI, auth,
+real gallery, upload, delete, styling).
 Then write a project skill live, and finish by breaking the app on purpose with
 a bad prompt to see what the guardrails were doing.
 

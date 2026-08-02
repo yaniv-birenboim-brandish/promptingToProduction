@@ -106,11 +106,12 @@ nobody gets stuck, not that everyone types the same thing.
 
 | | Slice | ~ |
 |---|---|---|
-| 1 | Google sign-in + session gate | 10 min |
-| 2 | Gallery through RLS (honest empty state) | 15 min |
-| 3 | Upload with rollback ⚠ riskiest | 20 min |
-| 4 | Delete your own | 7 min |
-| 5 | Styling pass (design reference) | 8 min |
+| 1 | Stubbed UI on fixture data | 10 min |
+| 2 | Google sign-in + session gate | 10 min |
+| 3 | Real gallery — swap fixtures for RLS-backed rows | 12 min |
+| 4 | Upload with rollback ⚠ riskiest | 18 min |
+| 5 | Delete your own | 5 min |
+| 6 | Styling pass (design reference) | 5 min |
 
 (The slice order and content come from `instructions/plan.md` — the plan the
 class critiqued at 0:10. If the critique changed the plan, the prompts bend
@@ -121,7 +122,7 @@ Teach these *as they happen*, not as a lecture:
 - **Context reset per slice.** After each commit, `/clear`. Show what a bloated
   context does to output quality if you have an example. The instinct to keep
   one long conversation is the most common bad habit in the room.
-- **Revert-and-re-prompt vs. correct-in-place.** Slice 3 usually offers a
+- **Revert-and-re-prompt vs. correct-in-place.** Slice 4 usually offers a
   natural example. Rule of thumb to say out loud: if the fix is "you
   misunderstood the shape of this," revert and re-prompt — you're editing the
   wrong source when you patch the output. If the fix is "this one line is
@@ -131,8 +132,8 @@ Teach these *as they happen*, not as a lecture:
 - **Read the diff, but not evenly.** Name the twelve risky lines in each slice
   (they're in the prompt files) and show yourself skimming the rest.
 
-**Watch the clock.** If you're past 1:05 and slice 3 isn't done, drop the
-styling slice (it's the take-home that loses least); delete (slice 4) goes
+**Watch the clock.** If you're past 1:05 and slice 4 isn't done, drop the
+styling slice (it's the take-home that loses least); delete (slice 5) goes
 next if you must. Do not sacrifice the last thirty minutes — the skill and
 the break-it demo are what people remember.
 

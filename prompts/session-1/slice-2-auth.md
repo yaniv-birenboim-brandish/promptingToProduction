@@ -1,8 +1,8 @@
-# Slice 1 — Sign in with Google
+# Slice 2 — Sign in with Google
 
-**Goal:** a real signed-in state. Click sign in, come back from Google as a
-known user, see who you are, sign out. Refresh the page and stay signed in.
-Logged out, you see only the sign-in prompt.
+**Goal:** a real signed-in state gating the stubbed app. Click sign in, come
+back from Google as a known user, see who you are, sign out. Refresh the page
+and stay signed in. Logged out, you see only the sign-in prompt.
 
 **Time:** ~10 minutes.
 
@@ -12,13 +12,6 @@ Logged out, you see only the sign-in prompt.
 
 ## Before you prompt
 
-Do these by hand — they're setup, not agent work:
-
-- [ ] `supabase/migrations/0001_init.sql` has been run in the SQL Editor
-- [ ] Table Editor shows `photos` with the **RLS enabled** badge; Storage
-      shows a private `photos` bucket
-- [ ] `.env` is filled in and `npm run dev` shows **no** "Supabase isn't
-      configured" banner
 - [ ] Google OAuth is configured (README section 6)
 
 ---
@@ -27,7 +20,7 @@ Do these by hand — they're setup, not agent work:
 
 > Read CLAUDE.md and instructions/plan.md first.
 >
-> Build slice 1 of the plan: authentication.
+> Build slice 2 of the plan: authentication.
 >
 > **Requirements**
 >
@@ -35,10 +28,10 @@ Do these by hand — they're setup, not agent work:
 >   user, and a loading flag. It must subscribe to
 >   `supabase.auth.onAuthStateChange` and clean the subscription up on unmount.
 > - Sign in with Google via `supabase.auth.signInWithOAuth`; sign out.
-> - `src/App.tsx` becomes a shell: while loading show a neutral state, when
->   signed out show the welcome screen with a working button, when signed in
->   show a header with the user's email and a sign-out button, and an empty
->   main area saying the gallery is coming in slice 2.
+> - `src/App.tsx` gates on the session: while loading show a neutral state,
+>   when signed out show a welcome screen with a working sign-in button, when
+>   signed in show a header with the user's email and a sign-out button above
+>   the existing stubbed UI from slice 1.
 >
 > **Constraints**
 >
@@ -47,7 +40,8 @@ Do these by hand — they're setup, not agent work:
 > - Use the existing shadcn Button. No router — one page, conditional
 >   rendering.
 > - Handle the "auth failed" case visibly — don't swallow the error.
-> - No photo code yet. That's slices 2–4.
+> - Don't touch the stubbed photo UI beyond gating it — real data starts in
+>   slice 3.
 >
 > Plan first, then wait for me.
 
@@ -63,7 +57,8 @@ Do these by hand — they're setup, not agent work:
   great one to catch on the projector.
 - Exactly one `createClient` in the whole app — did the rule hold?
 - Did it invent a `redirectTo`? If so, does it match your Supabase URL config?
-- Did any photo scaffolding sneak in "while it was in there"?
+- Did it modify the stubbed photo UI beyond gating it? That's scope creep in
+  its politest form.
 
 ## Teaching beat
 
