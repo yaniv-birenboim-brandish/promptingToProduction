@@ -16,19 +16,22 @@ exactly what you're allowed to see, and the database is what makes that true.
 toolkit, and reference material — everything that stays useful after the app is
 built. There is no `package.json` here and nothing to run.
 
-**The app lives on the `step*` branches**, each one the completed state after
+**The work lives on the `step*` branches**, each one the completed state after
 that step. They chain: `step2` branches from `step1`, and so on. So if you fall
-behind, check out the next step branch and you're caught up, with a working app.
+behind, check out the next step branch and you're caught up.
 
 ```
 main            course kit — instructions, prompts, skills, agents, resources, examples
- └─ step1       the runnable starter: toolchain, typed client, migration, empty shell
-     └─ step2   (session 1, slice 2 — auth)
-         └─ …
+ └─ step1       the thinking: spec + architecture plan. Still no code.
+     └─ step2   the runnable starter: toolchain, typed client, migration, empty shell
+         └─ step3   (session 1 — auth)
+             └─ …
 ```
 
-Every step branch inherits everything on `main`, so `CLAUDE.md`, the prompts and
-the skills travel with you.
+**No code exists until `step2`.** Step 1 is deliberately about deciding what to
+build (the spec) and how to build it (the plan) — the two exercises below.
+Every step branch inherits everything on `main`, so `CLAUDE.md`, the prompts
+and the skills travel with you.
 
 ### Getting started
 
@@ -36,11 +39,10 @@ the skills travel with you.
 git clone https://github.com/yaniv-birenboim-brandish/promptingToProduction.git
 cd promptingToProduction
 git checkout step1
-npm install
 ```
 
-Then follow `README.md` on that branch — it covers Supabase setup and the one
-manual Google OAuth step.
+No `npm install` yet — there's nothing to install until the starter arrives on
+`step2`. Step 1 is the two exercises below; both produce markdown, not code.
 
 ### The first exercise: write the spec
 
@@ -80,6 +82,12 @@ something you can see working. **Critique the draft before accepting it** —
 that's the exercise, and the most valuable minutes of session 1. Say
 **"write the plan"** at any point to save it to `instructions/plan.md`.
 
+### Then: the starter
+
+With the spec and plan in hand, `git checkout step2` brings in the runnable
+app skeleton. Follow the `README.md` on that branch — it covers `npm install`,
+Supabase setup, and the one manual Google OAuth step.
+
 ---
 
 ## What's on `main`
@@ -98,7 +106,7 @@ that's the exercise, and the most valuable minutes of session 1. Say
 | `skills/stub-skill/` | The one completed live in session 1. |
 | `.claude/agents/` | Subagent definitions — `implementer` and `test-writer`. |
 | `resources/` | Design material. The purchased JPhotolio theme lives here locally (gitignored — see `resources/README.md`); it's the predefined design FamAlbum builds against. |
-| `examples/` | The reference pieces the starter is assembled from — the configured Supabase client, generated types, the migration, and the env template. On `step1` these are wired into their real locations. |
+| `examples/` | The reference pieces the starter is assembled from — the configured Supabase client, generated types, the migration, and the env template. On `step2` these are wired into their real locations. |
 
 ### Not pre-built, on purpose
 
