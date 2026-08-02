@@ -71,10 +71,14 @@ it must have gotten right: the **permission rules** stated as database rules,
 and a **two-user definition of done**. Fix those live if weak; shrug off
 cosmetic differences.
 
-Then, in plan mode:
+Then move straight into planning — say, on the projector:
 
-> Read CLAUDE.md and instructions/spec.md. Plan the build for FamAlbum v1 as a
-> sequence of vertical slices. Don't write any code yet.
+> Let's plan the build.
+
+The `build-plan` skill fires and plays architect: it reads the spec, the tech
+stack, and CLAUDE.md, and proposes the slices. It's built to *invite*
+critique before saving, and honors **"write the plan"** whenever you're done
+arguing (output: `instructions/plan.md`).
 
 **Then stop and critique the plan as a class. This is the highest-leverage
 twenty minutes of the day — do not rush it to get to the code.**

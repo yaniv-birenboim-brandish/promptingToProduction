@@ -67,6 +67,19 @@ assumptions.
 When it's done you'll have `instructions/spec.md` — the file every plan,
 slice, and test in the course is built from.
 
+### The second exercise: plan the build
+
+With the spec written, say something like:
+
+> Let's plan the build.
+
+The `build-plan` skill acts as the project architect: it reads the spec, the
+fixed tech stack, and `CLAUDE.md`, then proposes a development plan as
+**vertical slices** — backend and frontend per slice, each ending with
+something you can see working. **Critique the draft before accepting it** —
+that's the exercise, and the most valuable minutes of session 1. Say
+**"write the plan"** at any point to save it to `instructions/plan.md`.
+
 ---
 
 ## What's on `main`
@@ -76,6 +89,7 @@ slice, and test in the course is built from.
 | `CLAUDE.md` | The agent's brief — stack, conventions, guardrails, scope. Inherited by every step branch. The highest-value file in the repo. |
 | `instructions/tech-stack.md` | The fixed technology choices, with the why for each. Not up for discussion — that's the point. |
 | `.claude/skills/build-spec/` | A working skill that guides you to the spec: short batches of questions (20 max), "speed up" / "write the spec" escape hatches, and technology never asked about. Session 1 opens with it — there is deliberately no spec in the repo. |
+| `.claude/skills/build-plan/` | The architect skill: turns the spec into a critique-ready development plan (`instructions/plan.md`) — vertical slices with backend, frontend, risks, and a done-check per slice. |
 | `instructions/setup-email.md` | Pre-session setup checklist, ready to send. |
 | `instructions/facilitator-guide.md` | Minute-by-minute run sheet for both sessions. |
 | `prompts/session-1/` | A starting prompt per slice, each with a "what to look for in the diff" review checklist. |
