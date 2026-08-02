@@ -53,8 +53,11 @@ if (rowErr) {
 }
 ```
 
-Deletes run the same two steps in reverse — object, then row — and both must
-be attempted.
+Deletes go **row first, then object**, and both must be attempted. The order
+is about failure modes: if the object delete then fails you have an orphaned
+object nobody can see; the other order can leave a row whose image 404s —
+a broken card on screen. Surface either failure; never swallow the second
+step.
 
 ## The path convention is load-bearing
 
