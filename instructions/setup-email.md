@@ -31,21 +31,21 @@ every line. Session 2 takes it to production.
 - [ ] **Netlify account** (free tier) — https://netlify.com — we need this in
       session 2, but sign up now so it's done
 - [ ] **Google Cloud project** for OAuth credentials — instructions are in the
-      README on the `step2` branch, section 6. *(See the note below.)*
+      README on the `starter` branch, section 6. *(See the note below.)*
 - [ ] **Clone the repo and confirm the app skeleton runs:**
 
 ```bash
 git clone https://github.com/yaniv-birenboim-brandish/promptingToProduction.git
 cd promptingToProduction
-git checkout step2
+git checkout starter
 npm install
 npm run dev
 ```
 
-*(The `git checkout step2` matters: `main` is the course kit and `step1` is
-where we write the spec and plan — no code exists until `step2`. Checking out
-`step2` here is only to prove your machine can run the app; in class we start
-back on `step1`.)*
+*(The `git checkout starter` matters: `main` is the course kit and `step1` is
+where we write the spec and plan — the first runnable code is the `starter`
+branch, the seeded environment we build from. Checking it out here is only to
+prove your machine can run the app; in class we start back on `step1`.)*
 
 Open http://localhost:5173. You should see the FamAlbum welcome screen with a
 greyed-out "Sign in with Google" button.

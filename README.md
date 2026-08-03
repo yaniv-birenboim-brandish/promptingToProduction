@@ -17,21 +17,24 @@ toolkit, and reference material — everything that stays useful after the app i
 built. There is no `package.json` here and nothing to run.
 
 **The work lives on the `step*` branches**, each one the completed state after
-that step. They chain: `step2` branches from `step1`, and so on. So if you fall
-behind, check out the next step branch and you're caught up.
+that course phase. They chain, so if you fall behind or want to rejoin the
+group, check out the next step branch and you're caught up. One branch —
+`starter` — is not a phase: it's the seeded environment you begin coding
+from.
 
 ```
-main            course kit — instructions, prompts, skills, agents, resources, examples
- └─ step1       the thinking: spec + architecture plan. Still no code.
-     └─ step2   the runnable starter: toolchain, typed client, migration, empty shell
-         └─ step3   (session 1 — auth)
-             └─ …
+main             course kit — instructions, prompts, skills, agents, resources, examples
+ └─ step1        phase 1, the thinking: spec + architecture plan. Still no code.
+     └─ starter  the seeded environment: toolchain, typed client, migration, empty shell
+         └─ step2    phase 2: the purchased template adapted into the stubbed UI
+             └─ step3    phase 3: Google sign-in gating the stub
+                 └─ …    then the real gallery, upload with rollback, delete
 ```
 
-**No code exists until `step2`.** Step 1 is deliberately about deciding what to
-build (the spec) and how to build it (the plan) — the two exercises below.
-Every step branch inherits everything on `main`, so `CLAUDE.md`, the prompts
-and the skills travel with you.
+**Step numbers = course phases.** Phase 1 produces markdown, not code; coding
+starts from `starter` and every phase from stubs onward gets its own step
+branch. Every branch inherits everything on `main`, so `CLAUDE.md`, the
+prompts and the skills travel with you.
 
 ### Getting started
 
@@ -41,8 +44,9 @@ cd promptingToProduction
 git checkout step1
 ```
 
-No `npm install` yet — there's nothing to install until the starter arrives on
-`step2`. Step 1 is the two exercises below; both produce markdown, not code.
+No `npm install` yet — there's nothing to install until you reach the
+`starter` branch. Step 1 is the two exercises below; both produce markdown,
+not code.
 
 ### The first exercise: write the spec
 
@@ -82,11 +86,13 @@ something you can see working. **Critique the draft before accepting it** —
 that's the exercise, and the most valuable minutes of session 1. Say
 **"write the plan"** at any point to save it to `instructions/plan.md`.
 
-### Then: the starter
+### Then: the starter, and phase 2
 
-With the spec and plan in hand, `git checkout step2` brings in the runnable
+With the spec and plan in hand, `git checkout starter` brings in the runnable
 app skeleton. Follow the `README.md` on that branch — it covers `npm install`,
-Supabase setup, and the one manual Google OAuth step.
+Supabase setup, and the one manual Google OAuth step. From there you build
+phase 2 (the stubs) with the agent, using `prompts/session-1/slice-1-stub.md`;
+its completed state is the `step2` branch.
 
 ---
 
@@ -106,7 +112,7 @@ Supabase setup, and the one manual Google OAuth step.
 | `skills/stub-skill/` | The one completed live in session 1. |
 | `.claude/agents/` | Subagent definitions — `implementer` and `test-writer`. |
 | `resources/` | The design. `react-template/` is the "purchased template" — the design as a runnable React app that slice 1 adapts into FamAlbum; `design-reference.md` documents its tokens and patterns. The original HTML theme lives only on the instructor's machine (gitignored; see `resources/README.md`). |
-| `examples/` | The reference pieces the starter is assembled from — the configured Supabase client, generated types, the migration, and the env template. On `step2` these are wired into their real locations. |
+| `examples/` | The reference pieces the starter is assembled from — the configured Supabase client, generated types, the migration, and the env template. On the `starter` branch (and everything after it) these are wired into their real locations. |
 
 ### Not pre-built, on purpose
 
