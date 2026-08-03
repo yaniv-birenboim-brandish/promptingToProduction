@@ -65,9 +65,12 @@ the decision `(assumed — change if wrong)`.
 - **The first UI slice adapts the purchased template.** The design ships as
   a working React app (`resources/react-template/`); slice 1 copies its
   layout, tokens, and interactions and swaps the data model to the
-  product's — it never rebuilds or restyles from scratch. No separate
-  "styling slice", and no visual decisions to make or ask about: later
-  slices that add UI reuse the template's patterns.
+  product's — it never rebuilds or restyles from scratch. **Write the
+  template's path (`resources/react-template/`) into the slice itself** —
+  the plan is followed by people and agents who won't guess where the
+  template lives. No separate "styling slice", and no visual decisions to
+  make or ask about: later slices that add UI reuse the template's
+  patterns.
 
 ## The plan file
 
