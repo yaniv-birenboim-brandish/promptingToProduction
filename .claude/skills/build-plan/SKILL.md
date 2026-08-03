@@ -21,9 +21,11 @@ Read, in this order:
    reopen technology choices; the architecture already follows from them
    (React SPA talks to Supabase through the one typed client; the database
    enforces permissions via RLS; no backend server).
-4. `resources/design-reference.md` — the predefined design (tokens, layout,
-   patterns, and a ready styling prompt). The design is decided, like the
-   stack: never ask the user to make visual choices.
+4. `resources/react-template/README.md` — the purchased template: the
+   design as a working React app in this exact stack. The design is
+   decided, like the stack: never ask the user to make visual choices.
+   (`resources/design-reference.md` is the same design as a written token
+   reference.)
 
 ## The welcome message
 
@@ -60,12 +62,12 @@ the decision `(assumed — change if wrong)`.
 - **Each slice reviewable in five minutes.** If it isn't, split it.
 - **Include the unglamorous paths**: error states surfaced to the user,
   the delete path, cleanup on unmount. Plans that skip them ship them broken.
-- **The design applies from the first UI slice.** The look is predefined in
-  `resources/design-reference.md`, so components are built styled from day
-  one — tokens in the Tailwind config, the reference's card/badge/grid
-  patterns in the components. No separate "styling slice", and no visual
-  decisions to make or ask about: when a slice adds UI, it adds it already
-  matching the reference.
+- **The first UI slice adapts the purchased template.** The design ships as
+  a working React app (`resources/react-template/`); slice 1 copies its
+  layout, tokens, and interactions and swaps the data model to the
+  product's — it never rebuilds or restyles from scratch. No separate
+  "styling slice", and no visual decisions to make or ask about: later
+  slices that add UI reuse the template's patterns.
 
 ## The plan file
 

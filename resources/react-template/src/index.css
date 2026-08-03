@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* Page texture (optional asset at /theme/bodypattern.png); falls back
+       to the flat page colour when absent. */
+    background-color: #fafafa;
+    background-image: url('/theme/bodypattern.png');
+    -webkit-font-smoothing: antialiased;
+  }
+}

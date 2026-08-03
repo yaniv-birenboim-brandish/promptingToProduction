@@ -3,21 +3,29 @@
 Reference material for the course. Nothing in here is application code, and
 nothing in here ships with FamAlbum.
 
-## The design reference (what students use)
+## The React template (what students start from)
 
-`design-reference.md` is the course's design source: the tokens, layout rules,
-and interaction patterns FamAlbum's UI follows, derived from the purchased
-theme below and described in our own terms — the license-safe, committed form.
-The UI implements it from the first slice — the look is predefined, so
-components are built already styled. The file also contains a ready styling
-prompt for restyling an existing unstyled app.
+`react-template/` is the course's "purchased template": the JPhotolio
+portfolio page as a small runnable **React app** in FamAlbum's exact stack.
+The lesson it embodies — buy a template in the technology you plan to build
+with, then adapt its data model to your product instead of porting markup.
+Slice 1 of the course is exactly that adaptation. See
+`react-template/README.md` for how to run it and how instructors import the
+real theme assets (which stay local-only).
+
+## The design reference
+
+`design-reference.md` is the design source in document form: the tokens,
+layout rules, and interaction patterns the template implements, described
+in our own terms — the license-safe record of where the design came from.
 
 ## The purchased theme bundle (local only, instructor's machine)
 
 `jphotolio-html-bundle/` is the **purchased** JPhotolio theme (jegtheme,
-ThemeForest item 3057579) — the full HTML build (`jphotoliohtml/`, with working
-JS), PSDs, docs, and license texts. It is the *source* the design reference
-above was derived from; students work from the reference, not the bundle.
+ThemeForest item 3057579) — the original HTML build, PSDs, docs, and license
+texts. It is the *provenance archive*: the source the React template and the
+design reference were derived from. Students never need it — they work from
+`react-template/`.
 
 It is **gitignored** (see `.gitignore`) and exists only on the instructor's
 machine: the ThemeForest license covers the buyer's use, not redistribution to

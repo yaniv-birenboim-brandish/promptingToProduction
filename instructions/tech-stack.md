@@ -16,7 +16,7 @@ database, host, or language; if it does, point it at this file.
 | Serverless (session 2) | Netlify Functions | The thumbnail generator showcase. |
 | Deploy (session 2) | Netlify, Git-connected | Push to deploy; env vars in the dashboard. |
 | CI (session 2) | GitHub Actions | Runs typecheck and tests on every push. |
-| Design | Predefined — see `resources/design-reference.md` | Derived from a purchased photography theme so nobody designs from scratch; the styling slice implements it. |
+| Design | Predefined — the purchased React template at `resources/react-template/` | Buy a template in the stack you build with; slice 1 adapts its data model instead of porting markup. Tokens documented in `resources/design-reference.md`. |
 
 Two consequences worth knowing even if you never touch the config:
 

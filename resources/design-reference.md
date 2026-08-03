@@ -1,11 +1,12 @@
 # Design reference — photography-portfolio direction
 
 Derived from the **JPhotolio** wedding photography template (jegtheme,
-ThemeForest item 3057579). The purchased theme is the course's predefined
-design; the instructor's copy lives at `resources/jphotolio-html-bundle/`
-(gitignored — the license covers the buyer, not everyone who clones this
-repo). **This file is the shareable form**: everything FamAlbum takes from
-that design, described in our own terms.
+ThemeForest item 3057579). The design ships as a working React app —
+**`resources/react-template/`** — which is what the course builds from;
+this file is the same design as a written record: tokens, layout rules, and
+interaction patterns in our own terms. (The original HTML purchase lives at
+`resources/jphotolio-html-bundle/`, local-only and gitignored — the license
+covers the buyer, not everyone who clones this repo.)
 
 **What this file is:** design *direction* — tokens, layout rules, and
 interaction patterns, for building FamAlbum's UI. The app implements it from
@@ -178,10 +179,10 @@ The centred split navigation is ported as-is; it's the page's identity.
 
 ## Tailwind tokens
 
-The base page for all of this is the purchased bundle's
-`jphotoliohtml/masonry.html`; every value below is verified against its
-actual stylesheet (`jphotoliohtml/css/style.css`). If a token here and the
-bundle ever disagree, the bundle wins — re-derive, don't guess.
+The live implementation of these tokens is
+`resources/react-template/tailwind.config.js` — that's the copy the course
+uses. Every value was verified against the original theme's stylesheet
+(`jphotolio-html-bundle/jphotoliohtml/css/style.css`, instructor-only).
 
 Drop into `tailwind.config.js` under `theme.extend`, or express as CSS variables
 in `src/index.css` alongside the existing shadcn ones:
@@ -239,9 +240,15 @@ with a hard boundary — no behaviour changes.
 
 ## Seeing the real thing
 
-Students: this file is your design source — it's complete on its own.
-Instructors with the purchased bundle can browse the live original for
-orientation or projector demos:
+Run the React template — it *is* the design, live:
+
+```bash
+cd resources/react-template
+npm install && npm run dev    # http://localhost:5180
+```
+
+Instructors with the purchased bundle can also browse the original HTML
+page for comparison:
 
 ```bash
 cd resources/jphotolio-html-bundle/jphotoliohtml

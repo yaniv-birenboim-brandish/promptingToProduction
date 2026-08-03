@@ -1,14 +1,20 @@
-# Slice 1 — Stubbed UI on fixture data, styled from the start
+# Slice 1 — Adapt the purchased template into FamAlbum's stub
 
-**Goal:** the whole app is visible, clickable, and **already looks like
-FamAlbum** before any backend exists: gallery grid, upload control with a
-private/shared choice, delete on "your" photos — all styled per
-`resources/design-reference.md`. Everything runs on fixture data in local
-state; nothing persists — a refresh resets it all, and that's correct.
+**Goal:** the whole app is visible, clickable, and **already looks like the
+template** before any backend exists — because you start *from* the
+template. `resources/react-template/` is the course's "purchased template":
+the JPhotolio portfolio page as a working React app in our exact stack.
+Slice 1 adapts its data model to FamAlbum: photos with owners and
+private/shared visibility, on fixture data in local state. Nothing
+persists — a refresh resets it all, and that's correct.
 
-**Time:** ~15 minutes. The fast visible win.
+**The lesson this slice embodies:** buy a template in the technology you
+plan to build with. Then adapting it is a *data-model* change, not a
+porting project.
 
-**Commit message:** `feat: stubbed UI on fixture data, styled per design reference`
+**Time:** ~15 minutes.
+
+**Commit message:** `feat: stubbed UI on fixture data, adapted from the template`
 
 ---
 
@@ -21,56 +27,57 @@ Do these by hand — they're setup, not agent work:
       shows a private `photos` bucket
 - [ ] `.env` is filled in and `npm run dev` shows **no** "Supabase isn't
       configured" banner
-
-(The migration isn't used in this slice — but confirming it now means slice 2
-onward never stops for setup.)
+- [ ] Optional but worth it: run the template once so you know what you're
+      adapting (`cd resources/react-template && npm install && npm run dev`)
 
 ---
 
 ## Prompt
 
-> Read CLAUDE.md, instructions/plan.md, and resources/design-reference.md
+> Read CLAUDE.md, instructions/plan.md, and resources/react-template/README.md
 > first.
 >
-> Build slice 1 of the plan: the stubbed UI, styled per the design reference.
+> Build slice 1 of the plan: adapt the React template at
+> `resources/react-template/` into FamAlbum's stubbed UI, inside this app's
+> `src/`.
 >
-> **Requirements**
+> **Keep from the template** (layout, tokens, interactions — unchanged):
 >
-> - `src/lib/fixtures.ts`: a fixture "current user" and 6–8 fixture photos
->   whose shape **matches `PhotoRow` from `src/lib/database.types.ts`** — a
->   mix of visibilities and owners. Image sources are embedded placeholders
->   (inline SVG data URIs are fine); no network calls.
-> - A `Gallery` grid of `PhotoCard`s: image, a plain private/shared badge,
->   and a delete control shown only on photos owned by the fixture user.
+> - The design tokens in its `tailwind.config.js`, and the fonts in its
+>   `index.html`
+> - The header (nav cells, logo slot), the measured masonry (`useMasonry`),
+>   the card hover interaction, the load reveal, the page-transition
+>   curtain, the single-item view with prev/next, the footer
+>
+> **Adapt** (the data model becomes FamAlbum's):
+>
+> - `data.ts` becomes `src/lib/fixtures.ts`: a fixture user and ~12 photos
+>   whose shape **matches `PhotoRow` from `src/lib/database.types.ts`** —
+>   mixed owners and visibilities. Family members' photos are only ever
+>   `shared` (you can never see someone else's private photo — a fixture
+>   showing one would lie).
+> - The **like badge** becomes the **private/shared badge** (private =
+>   accent colour, shared = neutral) — same corner, same tuck.
+> - The **category filter** becomes **all / my photos / family's** —
+>   display-only; keep a comment saying so, because it will come up.
+> - Card captions show owner ("You" / "Family") and date instead of title
+>   and categories; nav cells say Gallery / You instead of the template's
+>   pages.
+>
+> **Add** (FamAlbum features the template doesn't have):
+>
 > - An `UploadForm`: file input, private/shared choice defaulting to
->   **private**, and a submit that adds a fixture entry to local state (the
->   picked file's name is enough — no reading bytes).
-> - Clicking a photo opens a **single-photo view** — large image, owner and
->   date, prev/next, and a back control — behind the reference's **curtain
->   transition**: a page-covering panel slides down, the view swaps, the
->   panel lifts. No router — conditional rendering.
-> - Local state only, in `App`. Delete removes from local state.
-> - Style it per the design reference as you build: the palette and fonts
->   into `tailwind.config.js` (PT Sans Narrow 400/700, Overlock 400 italic
->   from Google Fonts), white cards on the off-white page, tight gutters,
->   3px radius, the card shadow, caption strip below the image, and the
->   private/shared **corner badge** tucked into the image (private = accent,
->   shared = neutral). **Masonry** as a measured layout, like the theme's:
->   fixed 220px items placed left-to-right into the shortest column,
->   absolutely positioned, relayout on resize and image load — a ~50-line
->   hook, no plugin. Give the fixtures mixed portrait/landscape sizes so
->   the columns interlock. Header per the reference: textured band, nav
->   cells with label + italic sublabel, the logo splitting the middle.
-> - A centered **filter bar** (all / my photos / family's) styled as the
->   reference's pills — active pill solid chrome-black. It filters the
->   *display* only; put that in a comment, because it will come up.
+>   **private**, submit adds a fixture entry to local state (file name is
+>   enough — no reading bytes)
+> - Delete on your own photos only (the template's closeme slot), removing
+>   from local state
+> - Local state in `App`; delete and upload update it
 >
 > **Constraints**
 >
-> - **No `supabase` import anywhere in this slice.** No hooks that talk to
->   the network. That starts in slice 2.
-> - No router, no new dependencies. One accent colour, used sparingly —
->   the private badge and the primary action, nothing else.
+> - **No `supabase` import anywhere in this slice.** That starts in slice 2.
+> - No router, no new dependencies. One accent colour: the private badge
+>   and the primary action, nothing else.
 >
 > Plan first, then wait for me.
 
@@ -78,33 +85,34 @@ onward never stops for setup.)
 
 ## What to look for when you review the diff
 
-- **Any import of `supabase`?** Too early — that's the whole boundary of this
-  slice. It's also the first test of whether the agent respects a "not yet"
-  constraint.
+- **Any import of `supabase`?** Too early — that's the boundary of this
+  slice, and the first test of whether the agent respects a "not yet".
 - **Does the fixture shape match `PhotoRow` exactly**, or did it invent a
-  `Photo` interface by hand? This is load-bearing: slice 3 swaps the data
-  source and should not touch a single component.
+  `Photo` interface? Load-bearing: slice 3 swaps the data source and should
+  not touch a single component.
+- Did it *adapt* the template or *rewrite* it? A huge diff in layout code
+  means it ported when it should have copied. The masonry hook, curtain,
+  and hover should arrive essentially verbatim.
 - Is the delete control keyed off `owner_id === fixtureUser.id`, mirroring
-  how the real ownership check will read later?
-- Did it sneak in persistence (localStorage) to be "helpful"? Out of scope.
-- **The accent discipline**: the reference is eight greys and one accent —
-  if the red-orange shows up anywhere beyond the private badge and the
-  primary action, push back.
-- **Is the filter display-only, and does a comment say so?** This line is
-  the seed of the homework and of session 2's whole security argument.
+  the real ownership check later?
+- **The accent discipline**: if the red-orange shows up beyond the private
+  badge and the primary action, push back.
+- **Is the filter display-only, and does a comment say so?** That line is
+  the seed of the homework and session 2's whole security argument.
 
 ## Teaching beat
 
-Two lessons in one slice. First: **the UI shape is a spec conversation** —
-with everything clickable in ten minutes, the non-technical people in the
-room can react to what FamAlbum *is* before any backend argument starts.
-Second: **swap data, not components** — say out loud that slice 3's entire
-job will be deleting `fixtures.ts` and pointing the same components at real
-rows. That only works because the fixtures were shaped like `PhotoRow` from
-the start. Cheap discipline now, free refactor later.
+Say the quiet part about templates: the expensive thing was never the CSS —
+it was the hundred small decisions (gutters, badge position, hover
+choreography) that the template already made. Buying it in your own stack
+means you inherit the decisions *and* the implementation, and "make it
+yours" collapses to a data-model swap. Then point at the fixture shape:
+slice 3 will delete `fixtures.ts` and point the same components at real
+rows. Cheap discipline now, free refactor later.
 
 ## Done when
 
-The grid renders, the upload form adds a card, delete removes one, clicking
-a photo opens it large behind the curtain and back returns to the grid — and
-a refresh resets everything to the fixtures.
+The grid renders looking like the template, the upload form adds a card,
+delete removes one, clicking a photo opens it large behind the curtain,
+the filter narrows the display — and a refresh resets everything to the
+fixtures.

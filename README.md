@@ -105,7 +105,7 @@ Supabase setup, and the one manual Google OAuth step.
 | `skills/supabase-data-access/` | A finished skill, to study. |
 | `skills/stub-skill/` | The one completed live in session 1. |
 | `.claude/agents/` | Subagent definitions — `implementer` and `test-writer`. |
-| `resources/` | The design. `design-reference.md` is the predefined design FamAlbum builds against (tokens, patterns, and the styling prompt) — derived from a purchased theme that lives only on the instructor's machine (gitignored; see `resources/README.md`). |
+| `resources/` | The design. `react-template/` is the "purchased template" — the design as a runnable React app that slice 1 adapts into FamAlbum; `design-reference.md` documents its tokens and patterns. The original HTML theme lives only on the instructor's machine (gitignored; see `resources/README.md`). |
 | `examples/` | The reference pieces the starter is assembled from — the configured Supabase client, generated types, the migration, and the env template. On `step2` these are wired into their real locations. |
 
 ### Not pre-built, on purpose
@@ -122,8 +122,9 @@ for the implementer-vs-test-writer contrast, not because they're the lesson.
 
 **Session 1 — build it.** `CLAUDE.md` walkthrough, then write the spec *with*
 the agent using the `build-spec` skill, plan mode and a class critique of the
-agent's plan, then five vertical slices with a commit each (stubbed UI styled
-per the design reference, auth, real gallery, upload, delete).
+agent's plan, then five vertical slices with a commit each (the purchased
+React template adapted into the stubbed UI, auth, real gallery, upload,
+delete).
 Then write a project skill live, and finish by breaking the app on purpose with
 a bad prompt to see what the guardrails were doing.
 
