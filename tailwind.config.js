@@ -35,6 +35,20 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        // Design tokens copied from resources/react-template/tailwind.config.js
+        page: '#fafafa',
+        ink: '#222222',
+        chrome: '#181818',
+        caption: '#464646',
+        meta: '#969595',
+        brand: '#de3917',
+      },
+      boxShadow: {
+        card: '0 1px 2px rgba(34,25,25,0.4)',
+      },
+      fontFamily: {
+        sans: ['"PT Sans Narrow"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        accent: ['Overlock', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',

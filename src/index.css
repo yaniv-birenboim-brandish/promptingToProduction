@@ -50,5 +50,9 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    /* The template's page texture (local-only asset). Falls back to the
+       flat page colour when /theme/bodypattern.png is absent. */
+    background-color: #fafafa;
+    background-image: url('/theme/bodypattern.png');
   }
 }
