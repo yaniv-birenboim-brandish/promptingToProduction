@@ -111,6 +111,16 @@ sub-label** ("PORTFOLIO / *What we have done*"). The logo sits in the middle of
 the nav, splitting it. That centred-logo split-nav is dated but the
 label+sublabel idea is genuinely nice and cheap to reuse.
 
+### Card hover
+
+The gallery's hover is not a zoom. Three things happen together, fast
+(~200ms): a **white veil** wipes down over the whole card (the theme's
+`.shadow` div animating height 0 → 100%), the **caption slides** from the
+bottom strip to the vertical centre of the card, and a small **type icon**
+appears under it (`display:none` until hover — it must not occupy layout
+space before). The corner badge sharpens from ~40% to full opacity. Cursor
+is pointer; the whole card is the click target.
+
 ### The reveal
 
 Each image starts covered by a white panel that animates its height to zero —
