@@ -21,3 +21,11 @@ resources/vendor/
 # not redistribution — committing it would hand the paid product to everyone
 # who clones this repo. It stays local, always.
 resources/jphotolio-html-bundle/
+
+# Local-only theme assets (photos, textures, logo) served by the app and the
+# react-template from their public/ folders. Same licensing rule as above.
+# Ignored at the root so they never show as untracked on branches that don't
+# track the nested public/*/.gitignore files.
+public/
+resources/react-template/public/theme/*.png
+resources/react-template/public/fixtures/*.jpg
