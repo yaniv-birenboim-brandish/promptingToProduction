@@ -151,12 +151,10 @@ lg 1024 / xl 1280` rather than reproducing these.
 
 **Adapt:**
 
-- Masonry: implemented with **CSS multi-column** (`columns-*` on the grid,
-  `break-inside-avoid` on the cards) — no plugin, no stored dimensions; the
-  browser packs cards as images load. (A measured JS masonry like the
-  theme's would need width/height columns in the schema — a session-2
-  change if the column-order quirk ever bothers anyone: CSS columns flow
-  top-to-bottom per column, not left-to-right.)
+- Masonry: implemented as a **measured layout** matching the theme's
+  plugin behaviour — fixed 220px items placed left-to-right into the
+  shortest column, absolutely positioned, relayout on resize and image
+  load (`useMasonry`, ~50 lines, no plugin, no stored dimensions).
 - Their filter bar maps onto the gallery's display filter (all / my photos
   / family's) — shipped styled in slice 1, filtering **display only**. The
   homework wires it into the database query and asks why the JS version
@@ -164,12 +162,17 @@ lg 1024 / xl 1280` rather than reproducing these.
 
 **Leave:**
 
-- Background texture PNGs, gradient chrome, sprite-sheet icons — use `lucide-react`,
-  it's already a dependency.
+- Sprite-sheet icons and gradient chrome — use `lucide-react`, it's already
+  a dependency.
 - Percentage font sizing. Use Tailwind's scale.
 - Bootstrap 2 grid and its breakpoints.
-- The centred split navigation. It breaks badly below 768px and FamAlbum has
-  four nav items at most.
+
+**Local-only assets:** the header/body/footer textures and the logo image
+are theme files served from gitignored `public/theme/` (the demo photos
+likewise from `public/fixtures/`). The app degrades gracefully without
+them — flat page colour, text wordmark, SVG placeholder photos — so fresh
+clones work; the full look exists only where the purchased bundle does.
+The centred split navigation is ported as-is; it's the page's identity.
 
 ---
 
