@@ -25,7 +25,8 @@ Mapping formula: **plan slice N = phase N+1 = branch step N+1** (prompt file:
 | `step4` | + phase 4: real gallery through the `usePhotos` hook — RLS query + batched signed URLs (fixture-fed until Supabase is configured; upload/delete stay clickable via the hook's fake-mode helpers). | |
 | `step5` | + phase 5: upload with rollback — Zod validation live in both modes; storage path + orphan rollback real, faked to a local object URL until Supabase is configured. | |
 | `step6` | + phase 6: delete your own — row first, then bytes, half-failures surfaced (faked until Supabase is configured; the two-user test needs the real backend). v1 code complete. | End of session 1. |
-| `step7+` | Session 2: slash commands + hooks, tests + CI, MCP, hardening + thumbnails, deploy. *(to build)* | |
+| `step7` | + session 2 opens: slash commands (`/add-table`, `/scaffold-component`) and hooks (format-on-write; commits blocked when typecheck fails). | |
+| `step8+` | Session 2 continued: tests + CI, MCP, hardening + thumbnails, deploy. *(to build)* | |
 
 ## Phase by phase (session 1)
 
