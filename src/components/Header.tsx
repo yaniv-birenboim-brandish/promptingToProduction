@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 interface HeaderProps {
   userEmail: string
+  onSignOut?: () => void
 }
 
 /**
@@ -10,7 +11,7 @@ interface HeaderProps {
  * FamAlbum. The textured band, cell hover, and logo slot are the
  * template's, unchanged.
  */
-export function Header({ userEmail }: HeaderProps) {
+export function Header({ userEmail, onSignOut }: HeaderProps) {
   const [logoLoaded, setLogoLoaded] = useState(true)
 
   return (
@@ -57,8 +58,17 @@ export function Header({ userEmail }: HeaderProps) {
             You
           </span>
           <span className="mt-1.5 font-accent text-[13px] italic text-caption transition-colors group-hover:text-white">
-            {userEmail} · fixtures
+            {userEmail}
           </span>
+          {onSignOut && (
+            <button
+              type="button"
+              onClick={onSignOut}
+              className="mt-1 font-accent text-[11px] italic text-meta underline-offset-2 transition-colors hover:underline group-hover:text-white"
+            >
+              sign out
+            </button>
+          )}
         </div>
       </div>
     </header>
