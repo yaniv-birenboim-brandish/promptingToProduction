@@ -22,7 +22,7 @@ Mapping formula: **plan slice N = phase N+1 = branch step N+1** (prompt file:
 | `starter` | + the seeded app: Vite/React/Tailwind toolchain, typed Supabase client, migration (table + RLS + bucket + policies), logged-out shell. | Everyone checks this out to start coding. Also the pre-course smoke test. |
 | `step2` | + phase 2 done: the template adapted into FamAlbum's stub (masonry, filter, badges, upload/delete on fixtures). No supabase imports. | Catch-up after the stubs. |
 | `step3` |  + phase 3: Google sign-in gating the stub (`useSession`; sign-in is faked locally until Supabase is configured). | |
-| `step4` | + phase 4: real gallery — fixtures deleted, RLS rows, signed URLs. *(to build)* | |
+| `step4` | + phase 4: real gallery through the `usePhotos` hook — RLS query + batched signed URLs (fixture-fed until Supabase is configured; upload/delete dormant). | |
 | `step5` | + phase 5: upload with storage rollback — the riskiest slice. *(to build)* | |
 | `step6` | + phase 6: delete your own; the spec's two-user test passes. v1 done. *(to build)* | End of session 1. |
 | `step7+` | Session 2: slash commands + hooks, tests + CI, MCP, hardening + thumbnails, deploy. *(to build)* | |
