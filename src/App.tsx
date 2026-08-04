@@ -8,6 +8,8 @@ import { Header } from '@/components/Header'
 import { UploadForm } from '@/components/UploadForm'
 import { usePhotos } from '@/hooks/usePhotos'
 import { useSession } from '@/hooks/useSession'
+import { useUploadPhoto } from '@/hooks/useUploadPhoto'
+import type { Visibility } from '@/lib/database.types'
 
 /**
  * Slice 3: the gallery reads from the data hook instead of local fixture
@@ -31,8 +33,9 @@ export default function App() {
     isLoading: photosLoading,
     error: photosError,
     isFakeData,
-    addPhoto,
+    insertLocalPhoto,
     removePhoto,
+    refresh,
   } = usePhotos()
   const [filter, setFilter] = useState<PhotoFilter>('all')
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -57,6 +60,23 @@ export default function App() {
   }
 
   const currentUserId = user?.id ?? ''
+  const {
+    isUploading,
+    error: uploadError,
+    upload,
+  } = useUploadPhoto(currentUserId)
+
+  /** Upload via the hook; on success the gallery updates without a reload. */
+  async function handleUpload(file: File, visibility: Visibility) {
+    const result = await upload(file, visibility)
+    if (!result) return false
+    if (result.localUrl) {
+      insertLocalPhoto(result.photo, result.localUrl)
+    } else {
+      await refresh()
+    }
+    return true
+  }
 
   // Display filtering only — never a security control (see CLAUDE.md).
   // RLS already decided which rows exist here at all.
@@ -147,9 +167,9 @@ export default function App() {
         ) : (
           <>
             <UploadForm
-              onUpload={(fileName, visibility) =>
-                addPhoto(fileName, visibility, currentUserId)
-              }
+              isUploading={isUploading}
+              error={uploadError}
+              onUpload={handleUpload}
             />
             <FilterBar active={filter} onChange={setFilter} />
 

@@ -4,9 +4,8 @@ import {
   FIXTURE_FALLBACK_URLS,
   FIXTURE_IMAGE_URLS,
   FIXTURE_PHOTOS,
-  makePlaceholderImage,
 } from '@/lib/fixtures'
-import type { PhotoRow, Visibility } from '@/lib/database.types'
+import type { PhotoRow } from '@/lib/database.types'
 
 interface UsePhotosResult {
   photos: PhotoRow[]
@@ -20,12 +19,11 @@ interface UsePhotosResult {
   isFakeData: boolean
   refresh: () => Promise<void>
   /**
-   * Fake-mode conveniences so the demo stays fully clickable: add to /
-   * remove from the in-memory fixture set. The REAL upload (with storage
-   * rollback) and delete are slices 4 and 5 — in real mode these surface
-   * an error instead of pretending.
+   * Fake-mode conveniences so the demo stays fully clickable: insert into
+   * / remove from the in-memory fixture set. In real mode, inserts come
+   * from the upload flow + refresh(), and the real delete is slice 5.
    */
-  addPhoto: (fileName: string, visibility: Visibility, ownerId: string) => void
+  insertLocalPhoto: (photo: PhotoRow, imageUrl: string) => void
   removePhoto: (id: string) => void
 }
 
@@ -106,25 +104,9 @@ export function usePhotos(): UsePhotosResult {
     void refresh()
   }, [refresh])
 
-  function addPhoto(fileName: string, visibility: Visibility, ownerId: string) {
-    if (!isFakeData) {
-      setError('The real upload flow arrives in slice 4 — coming soon.')
-      return
-    }
-    const id = crypto.randomUUID()
-    const photo: PhotoRow = {
-      id,
-      owner_id: ownerId,
-      storage_path: `${ownerId}/${id}.jpg`,
-      visibility,
-      caption: null,
-      created_at: new Date().toISOString(),
-    }
+  function insertLocalPhoto(photo: PhotoRow, imageUrl: string) {
     setPhotos((current) => [photo, ...current])
-    setImageUrls((current) => ({
-      ...current,
-      [id]: makePlaceholderImage(photos.length, fileName),
-    }))
+    setImageUrls((current) => ({ ...current, [photo.id]: imageUrl }))
   }
 
   function removePhoto(id: string) {
@@ -143,7 +125,7 @@ export function usePhotos(): UsePhotosResult {
     error,
     isFakeData,
     refresh,
-    addPhoto,
+    insertLocalPhoto,
     removePhoto,
   }
 }
