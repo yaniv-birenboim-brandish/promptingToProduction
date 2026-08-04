@@ -6,36 +6,34 @@ import { Footer } from '@/components/Footer'
 import { Gallery } from '@/components/Gallery'
 import { Header } from '@/components/Header'
 import { UploadForm } from '@/components/UploadForm'
+import { usePhotos } from '@/hooks/usePhotos'
 import { useSession } from '@/hooks/useSession'
-import {
-  FIXTURE_FALLBACK_URLS,
-  FIXTURE_IMAGE_URLS,
-  FIXTURE_PHOTOS,
-  makePlaceholderImage,
-} from '@/lib/fixtures'
-import type { PhotoRow, Visibility } from '@/lib/database.types'
 
 /**
- * Slice 2: sign-in gates the slice-1 stub. While loading, a neutral
- * page; signed out, only the welcome screen; signed in, the stubbed UI
- * with the session user's identity in the header. While Supabase is
- * unconfigured the session is faked locally (see useSession) — the flow
- * is identical, no Google involved.
- *
- * Photo data is still fixtures; ownership is keyed to the session user's
- * id (which the fake session aligns with the fixture user) until slice 3
- * swaps the data source for the database.
+ * Slice 3: the gallery reads from the data hook instead of local fixture
+ * state — the App no longer imports fixtures at all. In real mode the
+ * hook queries `photos` through RLS and signs storage URLs; while
+ * Supabase is unconfigured it serves fixtures from inside the hook, and
+ * the components can't tell the difference. Upload and delete are
+ * dormant this slice — they return, real, in slices 4 and 5.
  *
  * Still to come, per instructions/plan.md:
- *   3. real gallery (fixtures.ts gets deleted)
  *   4. upload with rollback
  *   5. delete for real
  */
 export default function App() {
   const { user, isLoading, error, isFakeAuth, signInWithGoogle, signOut } =
     useSession()
-  const [photos, setPhotos] = useState<PhotoRow[]>(FIXTURE_PHOTOS)
-  const [imageUrls, setImageUrls] = useState<Record<string, string>>(FIXTURE_IMAGE_URLS)
+  const {
+    photos,
+    imageUrls,
+    fallbackUrls,
+    isLoading: photosLoading,
+    error: photosError,
+    isFakeData,
+    addPhoto,
+    removePhoto,
+  } = usePhotos()
   const [filter, setFilter] = useState<PhotoFilter>('all')
   const [selectedId, setSelectedId] = useState<string | null>(null)
   // The page boots behind the curtain, which lifts once mounted — the
@@ -58,33 +56,10 @@ export default function App() {
     }, 450)
   }
 
-  // Ownership is keyed to the signed-in user (fake or real). Empty string
-  // only while signed out, where none of this renders.
   const currentUserId = user?.id ?? ''
 
-  function handleUpload(fileName: string, visibility: Visibility) {
-    const id = crypto.randomUUID()
-    const photo: PhotoRow = {
-      id,
-      owner_id: currentUserId,
-      storage_path: `${currentUserId}/${id}.jpg`,
-      visibility,
-      caption: null,
-      created_at: new Date().toISOString(),
-    }
-    setPhotos((current) => [photo, ...current])
-    setImageUrls((current) => ({
-      ...current,
-      [id]: makePlaceholderImage(photos.length, fileName),
-    }))
-  }
-
-  function handleDelete(id: string) {
-    setPhotos((current) => current.filter((photo) => photo.id !== id))
-    if (selectedId === id) setSelectedId(null)
-  }
-
   // Display filtering only — never a security control (see CLAUDE.md).
+  // RLS already decided which rows exist here at all.
   const visiblePhotos = photos.filter((photo) => {
     if (filter === 'mine') return photo.owner_id === currentUserId
     if (filter === 'family') return photo.owner_id !== currentUserId
@@ -163,7 +138,7 @@ export default function App() {
           <Detail
             photo={selected}
             imageUrl={imageUrls[selected.id] ?? ''}
-            fallbackUrl={FIXTURE_FALLBACK_URLS[selected.id]}
+            fallbackUrl={fallbackUrls[selected.id]}
             ownerLabel={selected.owner_id === currentUserId ? 'You' : 'Family'}
             onBack={() => goTo(null)}
             onPrev={() => step(-1)}
@@ -171,16 +146,45 @@ export default function App() {
           />
         ) : (
           <>
-            <UploadForm onUpload={handleUpload} />
-            <FilterBar active={filter} onChange={setFilter} />
-            <Gallery
-              photos={visiblePhotos}
-              imageUrls={imageUrls}
-              fallbackUrls={FIXTURE_FALLBACK_URLS}
-              currentUserId={currentUserId}
-              onDelete={handleDelete}
-              onOpen={(id) => goTo(id)}
+            <UploadForm
+              onUpload={(fileName, visibility) =>
+                addPhoto(fileName, visibility, currentUserId)
+              }
             />
+            <FilterBar active={filter} onChange={setFilter} />
+
+            {isFakeData && (
+              <p className="text-center font-accent text-xs italic text-meta">
+                fixture data — the real gallery (RLS + signed URLs) activates
+                once Supabase is configured
+              </p>
+            )}
+
+            {photosError && (
+              <p className="mx-auto max-w-xl rounded-[3px] border border-brand/40 bg-white px-4 py-2 text-center text-sm text-brand shadow-card">
+                Couldn't load photos: {photosError}
+              </p>
+            )}
+
+            {photosLoading ? (
+              <div className="rounded-[3px] border border-dashed border-[#dddddd] bg-white p-12 text-center shadow-card">
+                <p className="font-accent text-sm italic text-meta">
+                  loading the album…
+                </p>
+              </div>
+            ) : (
+              <Gallery
+                photos={visiblePhotos}
+                imageUrls={imageUrls}
+                fallbackUrls={fallbackUrls}
+                currentUserId={currentUserId}
+                onDelete={(id) => {
+                  removePhoto(id)
+                  if (selectedId === id) setSelectedId(null)
+                }}
+                onOpen={(id) => goTo(id)}
+              />
+            )}
           </>
         )}
       </main>

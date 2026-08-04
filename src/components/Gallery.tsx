@@ -7,6 +7,8 @@ interface GalleryProps {
   imageUrls: Record<string, string>
   fallbackUrls?: Record<string, string>
   currentUserId: string
+  /** Delete stays hidden until its slice makes it real. */
+  deleteEnabled?: boolean
   onDelete: (id: string) => void
   onOpen: (id: string) => void
 }
@@ -21,6 +23,7 @@ export function Gallery({
   imageUrls,
   fallbackUrls,
   currentUserId,
+  deleteEnabled = true,
   onDelete,
   onOpen,
 }: GalleryProps) {
@@ -54,7 +57,7 @@ export function Gallery({
           imageUrl={imageUrls[photo.id] ?? ''}
           fallbackUrl={fallbackUrls?.[photo.id]}
           ownerLabel={photo.owner_id === currentUserId ? 'You' : 'Family'}
-          canDelete={photo.owner_id === currentUserId}
+          canDelete={deleteEnabled && photo.owner_id === currentUserId}
           onDelete={onDelete}
           onOpen={onOpen}
           onMediaLoad={relayout}

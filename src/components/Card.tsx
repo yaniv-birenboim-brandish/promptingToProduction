@@ -80,12 +80,13 @@ export function Card({
         {photo.visibility}
       </span>
 
-      {/* Delete — the template's closeme slot: your own photos only */}
+      {/* Delete — your own photos only: a small icon under the badge,
+          top-right, revealed by the hover flip */}
       {canDelete && (
         <button
           type="button"
           aria-label="Delete photo"
-          className="absolute left-0 top-0 z-20 rounded-br-[5px] bg-white p-1 text-ink opacity-0 transition-opacity group-hover:opacity-60 hover:!opacity-100"
+          className="absolute right-0 top-7 z-20 rounded-l-[5px] bg-white p-1 text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-70 hover:!opacity-100 hover:text-brand"
           onClick={(e) => {
             e.stopPropagation()
             onDelete(photo.id)
