@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer'
 import { Gallery } from '@/components/Gallery'
 import { Header } from '@/components/Header'
 import { UploadForm } from '@/components/UploadForm'
+import { useDeletePhoto } from '@/hooks/useDeletePhoto'
 import { usePhotos } from '@/hooks/usePhotos'
 import { useSession } from '@/hooks/useSession'
 import { useUploadPhoto } from '@/hooks/useUploadPhoto'
@@ -83,6 +84,22 @@ export default function App() {
       await refresh()
     }
     return true
+  }
+
+  const { error: deleteError, deletePhoto } = useDeletePhoto()
+
+  /** Delete via the hook: row first, then bytes; then update the view. */
+  async function handleDelete(id: string) {
+    const photo = photos.find((p) => p.id === id)
+    if (!photo) return
+    const gone = await deletePhoto(photo)
+    if (!gone) return
+    if (isFakeData) {
+      removePhoto(id)
+    } else {
+      await refresh()
+    }
+    if (selectedId === id) setSelectedId(null)
   }
 
   // Display filtering only — never a security control (see CLAUDE.md).
@@ -196,6 +213,12 @@ export default function App() {
               </p>
             )}
 
+            {deleteError && (
+              <p className="mx-auto max-w-xl rounded-[3px] border border-brand/40 bg-white px-4 py-2 text-center text-sm text-brand shadow-card">
+                {deleteError}
+              </p>
+            )}
+
             {photosError && (
               <p className="mx-auto max-w-xl rounded-[3px] border border-brand/40 bg-white px-4 py-2 text-center text-sm text-brand shadow-card">
                 Couldn't load photos: {photosError}
@@ -214,10 +237,7 @@ export default function App() {
                 imageUrls={imageUrls}
                 fallbackUrls={fallbackUrls}
                 currentUserId={currentUserId}
-                onDelete={(id) => {
-                  removePhoto(id)
-                  if (selectedId === id) setSelectedId(null)
-                }}
+                onDelete={(id) => void handleDelete(id)}
                 onOpen={(id) => goTo(id)}
               />
             )}
