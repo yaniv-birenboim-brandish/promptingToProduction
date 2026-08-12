@@ -1,0 +1,14 @@
+# Netlify deploy config. Build settings mirror the ones set in the Netlify UI;
+# the redirect is the part that must live in the repo: public/ is gitignored
+# (licensed theme assets), so a public/_redirects file can't be committed.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback: serve index.html for every path so refreshes and
+# OAuth redirect landings don't 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
