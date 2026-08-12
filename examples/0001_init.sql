@@ -151,7 +151,9 @@ on conflict (id) do update
 -- (b) is what makes "user B pastes user A's private object URL" fail in
 -- session 2 — go try it.
 -- ---------------------------------------------------------------------------
-alter table storage.objects enable row level security;
+-- (On hosted Supabase, RLS is already enabled on storage.objects and only
+-- the storage admin role may ALTER it — re-enabling here would fail with
+-- "must be owner of table objects", so this migration does not try.)
 
 drop policy if exists "photos_storage_read_shared_or_own" on storage.objects;
 create policy "photos_storage_read_shared_or_own"
